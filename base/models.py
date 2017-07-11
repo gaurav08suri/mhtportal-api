@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django_countries.fields import CountryField
+from django.utils.translation import ugettext as _
 from localflavor.in_.in_states import STATE_CHOICES
 import string
 
@@ -12,7 +13,7 @@ class Center(models.Model):
     """Center represents an Ymht Center
     """
 
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, help_text=_("Center Name"))
 
     def __str__(self):
         return "Center: {}".format(name)
@@ -36,14 +37,17 @@ class Address(models.Model):
 
     # Validators
     ONLY_DIGITS_VALIDATOR = RegexValidator(regex=r'^[0-9]*$',
-                                message="Only digits allowed.")
+                                message=_("Only digits allowed."))
 
-    address_1 = models.CharField(max_length=128)
-    address_2 = models.CharField(max_length=255, blank=True)
-    city = models.CharField(max_length=60)
-    state = models.CharField(max_length=30, choices=STATE_CHOICES)
-    country = CountryField()
-    zip_code = models.CharField(max_length=6, validators=[ONLY_DIGITS_VALIDATOR,])
+    address_1 = models.CharField(max_length=128, help_text=_("Address 1"))
+    address_2 = models.CharField(max_length=255, blank=True,
+                                help_text=_("Address 2"))
+    city = models.CharField(max_length=60, help_text=_("City"))
+    state = models.CharField(max_length=30, choices=STATE_CHOICES,
+                            help_text=_("State"))
+    country = CountryField(help_text=_("Country"))
+    zip_code = models.CharField(max_length=6, validators=[ONLY_DIGITS_VALIDATOR,],
+                                help_text=_("Zip Code"))
     raw = models.TextField(blank=True)
 
     def __str__(self):
@@ -84,17 +88,20 @@ class Participant(models.Model):
             message="Mobile Number must be entered in the format:\
                     '+999999999999'. Up to 15 digits allowed.")
 
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    date_of_birth = models.DateField()
-    mobile = models.CharField(max_length=15, validators=[MOBILE_VALIDATOR,])
+    first_name = models.CharField(max_length=50, help_text=_("First Name"))
+    last_name = models.CharField(max_length=50, help_text=_("Last Name"))
+    date_of_birth = models.DateField(help_text=_("Date Of Birth"))
+    mobile = models.CharField(max_length=15, validators=[MOBILE_VALIDATOR,],
+                            help_text=_("Mobile Number. Add +91 prefix"))
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES,
                                 default=GENDER_MALE)
-    center = models.ForeignKey(Center, on_delete=models.CASCADE)
+    center = models.ForeignKey(Center, on_delete=models.CASCADE,
+                                help_text=_("Center"))
 
     # Currently we are keeping this field optional
-    email = models.EmailField(blank=True)
-    guardian_name = models.CharField(max_length=50, blank=True)
+    email = models.EmailField(blank=True, help_text=_("Email"))
+    guardian_name = models.CharField(max_length=50, blank=True,
+                            help_text=_("Any one Parent or Guradian Name"))
 
     def __str__(self):
         return "Participant: {} {}\n {}".format(
@@ -128,12 +135,13 @@ class Profile(models.Model):
     center = models.ForeignKey(Center, on_delete=models.CASCADE, blank=True, null=True)
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES,
                                 default=GENDER_MALE)
-    mobile = models.CharField(max_length=15, validators=[MOBILE_VALIDATOR,], blank=True)
-
+    mobile = models.CharField(max_length=15, validators=[MOBILE_VALIDATOR,], blank=True,
+                            help_text=_("Mobile Number. Add +91 prefix"))
     # This represents age-group
-    min_age = models.CharField(max_length=2, validators=[ONLY_DIGITS_VALIDATOR,])
-    max_age = models.CharField(max_length=2, validators=[ONLY_DIGITS_VALIDATOR,])
-
+    min_age = models.CharField(max_length=2, validators=[ONLY_DIGITS_VALIDATOR,],
+                                help_text=_("Age Group lower limit"))
+    max_age = models.CharField(max_length=2, validators=[ONLY_DIGITS_VALIDATOR,],
+                                help_text=_("Age Group Upper limit"))
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
