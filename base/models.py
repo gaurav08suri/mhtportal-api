@@ -121,13 +121,18 @@ class Profile(models.Model):
             message="Mobile Number must be entered in the format:\
                     '+999999999999'. Up to 15 digits allowed.")
 
+    ONLY_DIGITS_VALIDATOR = RegexValidator(regex=r'^[0-9]*$',
+                                message="Only digits allowed.")
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     center = models.ForeignKey(Center, on_delete=models.CASCADE, blank=True, null=True)
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES,
                                 default=GENDER_MALE)
     mobile = models.CharField(max_length=15, validators=[MOBILE_VALIDATOR,], blank=True)
-    # age_group
 
+    # This represents age-group
+    min_age = models.CharField(max_length=2, validators=[ONLY_DIGITS_VALIDATOR,])
+    max_age = models.CharField(max_length=2, validators=[ONLY_DIGITS_VALIDATOR,])
 
 
 @receiver(post_save, sender=User)
