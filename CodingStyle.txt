@@ -1,0 +1,31 @@
+		Mht Portal coding style
+
+This is a short document describing the preferred coding style for the
+Mht Portal.  Coding style is very personal, and I won't _force_ my
+views on anybody, but this is what goes for anything that I have to be
+able to maintain, and I'd prefer it for most other things too.  Please
+at least consider the points made here.
+
+First off, I'd suggest reading PEP8 and strongly advice to follow it.
+
+Anyway, here are some additions/changes to pep8 for Mht Portal:
+
+
+		Chapter 1: Quotes
+
+I strongly recommend to use single quotes everywhere except for when
+you are writing strings that are:
+	1. Directly shown to user
+	2. Or includes single quotes
+in that case you should use double quotes
+
+		Chapter 2: Comments and Docstrings
+
+Comments should show why you did, what you did and not on how it
+works. And, Please comment your code!
+
+I strongly recommend to follow pep257 for docstrings.
+
+
+
+
