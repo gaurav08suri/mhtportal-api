@@ -32,8 +32,8 @@ class Event(models.Model):
     max_age = models.CharField(max_length=2, validators=[ONLY_DIGITS_VALIDATOR,],
                                 help_text=_("Age Group Upper limit"))
 
-    rules = models.TextField(help_text=_("Any Rules"))
-    remarks = models.TextField(help_text=_("Any Remarks"))
+    rules = models.TextField(help_text=_("Any Rules"), blank=True)
+    remarks = models.TextField(help_text=_("Any Remarks"), blank=True)
 
 class EventParticipant(models.Model):
     """EventParticipant stores information about an participant for the Event.
