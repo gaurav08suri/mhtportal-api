@@ -77,8 +77,8 @@ class Participant(models.Model):
     """
 
     # Choices
-    GENDER_FEMALE = 'male'
-    GENDER_MALE = 'female'
+    GENDER_FEMALE = 'female'
+    GENDER_MALE = 'male'
     GENDER_CHOICES = (
             (GENDER_FEMALE, 'Female'),
             (GENDER_MALE, 'Male'))
@@ -97,11 +97,19 @@ class Participant(models.Model):
                                 default=GENDER_MALE)
     center = models.ForeignKey(Center, on_delete=models.CASCADE,
                                 help_text=_("Center"))
+    other_center = models.CharField(max_length=50, help_text=_("First Name"),
+                                    blank=True)
+    father_name = models.CharField(max_length=50,
+                            help_text=_("Father's Name"))
+    father_mobile = models.CharField(max_length=15, validators=[MOBILE_VALIDATOR,],
+                            help_text=_("Father's Mobile Number. Add +91 prefix"))
 
     # Currently we are keeping this field optional
     email = models.EmailField(blank=True, help_text=_("Email"))
-    guardian_name = models.CharField(max_length=50, blank=True,
-                            help_text=_("Any one Parent or Guradian Name"))
+    mother_name = models.CharField(max_length=50, blank=True,
+                            help_text=_("Mother's Name"))
+    mother_mobile = models.CharField(max_length=15, validators=[MOBILE_VALIDATOR,],
+                            blank=True, help_text=_("Mother's Mobile Number. Add +91 prefix"))
 
     def __str__(self):
         return "Participant: {} {}\n {}".format(
