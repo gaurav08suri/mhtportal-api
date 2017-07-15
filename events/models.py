@@ -24,13 +24,16 @@ class Event(models.Model):
                                 help_text=_("Event Fees"))
     late_fees = models.DecimalField(max_digits=10, decimal_places=2,
                                 help_text=_("Late Registration Fees"))
+    accommodation_provided = models.BooleanField(help_text=_("Is Accommodation Provided?"))
 
     # This represents Age group
     min_age = models.CharField(max_length=2, validators=[ONLY_DIGITS_VALIDATOR,],
                                 help_text=_("Age Group Lower limit"))
     max_age = models.CharField(max_length=2, validators=[ONLY_DIGITS_VALIDATOR,],
                                 help_text=_("Age Group Upper limit"))
-    remarks = models.TextField(help_text=_("Any remarks"))
+
+    rules = models.TextField(help_text=_("Any Rules"))
+    remarks = models.TextField(help_text=_("Any Remarks"))
 
 class EventParticipant(models.Model):
     """EventParticipant stores information about an participant for the Event.
@@ -53,20 +56,20 @@ class EventParticipant(models.Model):
             (ROLE_COORDINATOR, 'Coordinator'))
 
     # Validators
-    ONLY_DIGITS_VALIDATOR = RegexValidator(regex=r'^[0-9]*$',
+    ONLY_ALPHANUMERIC_VALIDATOR = RegexValidator(regex=r'^[0-9 a-z A-Z]*$',
                                 message="Only digits allowed.")
 
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     pariticipant = models.ForeignKey(Participant, on_delete=models.CASCADE)
-    registration_no = models.CharField(max_length=20, validators=[ONLY_DIGITS_VALIDATOR,],
+    registration_no = models.CharField(max_length=20, validators=[ONLY_ALPHANUMERIC_VALIDATOR,],
                                         help_text=_("Registration Number"))
     home_center = models.ForeignKey(Center, on_delete=models.CASCADE, related_name='home_center',
                                     help_text=_("Home Center"))
     event_center = models.ForeignKey(Center, on_delete=models.CASCADE, blank=True, null=True,
                                     related_name='event_center', help_text=_("Event Center"))
-    accommodation = models.BooleanField(help_text=_("Is accommodation required?"))
+    accommodation = models.BooleanField(help_text=_("Is Accommodation Required?"))
     payment_status = models.BooleanField(help_text=_("Has paid?"))
-    amount_paid = models.DecimalField(max_digits=10, decimal_places=2, help_text=_("Amount paid"))
+    amount_paid = models.DecimalField(max_digits=10, decimal_places=2, help_text=_("Amount Paid"))
     cashier = models.CharField(max_length=50, help_text=_("Cashier"))
     role = models.CharField(max_length=12, choices=ROLE_CHOICES, help_text=_("Role"))
 
