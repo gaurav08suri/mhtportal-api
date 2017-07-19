@@ -18,6 +18,7 @@ from django.conf.urls import (url,
 from django.contrib import admin
 
 urlpatterns = [
+    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^base/', include('base.urls', namespace='base')),
     url(r'^events/', include('events.urls', namespace='events')),
