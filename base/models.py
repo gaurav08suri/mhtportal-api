@@ -9,6 +9,7 @@ from localflavor.in_.in_states import STATE_CHOICES
 import string
 
 
+
 class Center(models.Model):
     """Center represents an Ymht Center
     """
@@ -151,12 +152,16 @@ class Profile(models.Model):
     max_age = models.CharField(max_length=2, validators=[ONLY_DIGITS_VALIDATOR,],
                                 help_text=_("Age Group Upper limit"))
 
+
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     """Create Profile when the User is created."""
 
     if created:
         Profile.objects.create(user=instance)
+
+
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
