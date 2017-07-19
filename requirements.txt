@@ -6,6 +6,7 @@ Django==1.11.3
 django-countries==4.6.1
 django-localflavor==1.5.2
 djangorestframework==3.6.3
+docutils==0.13.1
 idna==2.5
 itypes==1.1.0
 Jinja2==2.9.6
