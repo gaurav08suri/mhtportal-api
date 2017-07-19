@@ -11,6 +11,7 @@ First off, I'd suggest reading PEP8 and strongly advice to follow it.
 Anyway, here are some additions/changes to pep8 for Mht Portal:
 
 
+
 		Chapter 1: Quotes
 
 I strongly recommend to use single quotes everywhere except for when
@@ -18,6 +19,8 @@ you are writing strings that are:
 	1. Directly shown to user
 	2. Or includes single quotes
 in that case you should use double quotes
+
+
 
 		Chapter 2: Comments and Docstrings
 
@@ -28,4 +31,47 @@ I strongly recommend to follow pep257 for docstrings.
 
 
 
+		Chapter 3: Imports
 
+Always explicitly specify the imports.
+if the import statement includes more than one import, wrap the
+imports in parentheses with each import module in a single line
+
+Examples:
+
+from foo import bar
+
+from foo import (bar,
+                anotherbar,
+                onemore)
+
+
+
+		Chapter 3: linebreaks
+
+Always put 3 linebreaks in-between module level functions or
+classes.
+Always put a linebreak in-between inner level functions or
+classes.
+
+
+
+		Chapter 4: Functions
+
+Never put spaces around assignment operator when specifiying
+keyword arguments or parameters.
+
+Example:
+Don't do this:
+
+    def foo(bar = False):
+        return bar
+
+    foo(bar = True)
+
+Do this:
+
+    def foo(bar=False):
+        return bar
+
+    foo(bar=True)
