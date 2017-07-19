@@ -73,8 +73,7 @@ class Address(models.Model):
 
 class Participant(models.Model):
     """Pariticpant represents an profile of event pariticipant
-
-    center field is an foreign key to :model: `base.Center`
+    center field is an foreign key to :model:`base.Center`
     """
 
     # Choices
@@ -98,8 +97,8 @@ class Participant(models.Model):
                                 default=GENDER_MALE)
     center = models.ForeignKey(Center, on_delete=models.CASCADE,
                                 help_text=_("Center"))
-    other_center = models.CharField(max_length=50, help_text=_("First Name"),
-                                    blank=True)
+    other_center = models.CharField(max_length=50, help_text=_(
+                            "Center name if not available above"), blank=True)
     father_name = models.CharField(max_length=50,
                             help_text=_("Father's Name"))
     father_mobile = models.CharField(max_length=15, validators=[MOBILE_VALIDATOR,],
