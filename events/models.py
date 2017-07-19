@@ -4,6 +4,7 @@ from django.core.validators import RegexValidator
 from base.models import (Address, Center, Participant)
 
 
+
 class Event(models.Model):
     """Event represents an particular Event.
 
@@ -34,6 +35,8 @@ class Event(models.Model):
 
     rules = models.TextField(help_text=_("Any Rules"), blank=True)
     remarks = models.TextField(help_text=_("Any Remarks"), blank=True)
+
+
 
 class EventParticipant(models.Model):
     """EventParticipant stores information about an participant for the Event.
