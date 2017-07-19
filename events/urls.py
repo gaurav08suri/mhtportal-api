@@ -18,13 +18,13 @@ api_endpoints_list = {
         }
 
 urlpatterns = [
-    url(r'^(?P<pk>[0-9]+)/$', EventViewSet.as_view(api_endpoints_default), name='events'),
     url(r'^list/$', EventViewSet.as_view(api_endpoints_list), name='events-list'),
     url(r'^api-info/$', schema_view, name='api-info'),
-    url(r'^event-participants/(?P<pk>[0-9]+)/$', EventParticipantViewSet.as_view(
-        api_endpoints_default), name='event-participants'),
     url(r'^event-participants/list/$', EventParticipantViewSet.as_view(api_endpoints_list),
         name='event-participants-list'),
+    url(r'^event-participants/(?P<pk>[0-9]+)/$', EventParticipantViewSet.as_view(
+        api_endpoints_default), name='event-participants'),
+    url(r'^(?P<pk>[0-9]+)/$', EventViewSet.as_view(api_endpoints_default), name='events'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
