@@ -27,7 +27,7 @@ class Center(models.Model):
         convert to lowercase
         """
 
-        self.name = self.address_1.rstrip(string.whitespace+',').lower()
+        self.name = self.name.rstrip(string.whitespace+',').lower()
         super().save(*args, **kwargs)
 
 
@@ -62,8 +62,8 @@ class Address(models.Model):
         """
 
         self.address_1 = self.address_1.rstrip(string.whitespace+',')
-        self.address_2 = self.address_1.rstrip(string.whitespace+',')
-        self.city = self.address_1.rstrip(string.whitespace+',')
+        self.address_2 = self.address_2.rstrip(string.whitespace+',')
+        self.city = self.city.rstrip(string.whitespace+',')
         self.raw = '{}\n,{}\n,{}-{}\n,{}\n,{}'.format(
                 address_1, address_2, city, state, country, zip_code)
 
