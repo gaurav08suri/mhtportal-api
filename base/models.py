@@ -17,7 +17,7 @@ class Center(models.Model):
     name = models.CharField(max_length=50, help_text=_("Center Name"))
 
     def __str__(self):
-        return "Center: {}".format(name)
+        return "Center: {}".format(self.name)
 
 
     def save(self, *args, **kwargs):
@@ -52,7 +52,7 @@ class Address(models.Model):
     raw = models.TextField(blank=True)
 
     def __str__(self):
-        return "Address: {}".format(raw)
+        return "Address: {}".format(self.raw)
 
     def save(self, *args, **kwargs):
         """Filter fields before save
