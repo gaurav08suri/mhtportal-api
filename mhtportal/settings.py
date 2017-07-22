@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'localflavor',
     'django_countries',
+    'corsheaders',
 
     # in-house apps
     'base.apps.BaseConfig',
@@ -50,10 +51,15 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # Cross Origin support
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'corsheaders.middleware.CorsPostCsrfMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -128,3 +134,22 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# CORS SETTINGS
+
+# if this is enabled please use CORS_ORIGIN_WHITELIST
+CORS_REPLACE_HTTPS_REFERER=True
+
+# Please use this in production
+# CORS_ORIGIN_WHITELIST = (
+#     'localhost:8000',
+# )
+
+# Please use this in production
+# CSRF_TRUSTED_ORIGINS = (
+#     'change.allowed.com',
+# )
+
+# Please don't use this in production
+CORS_ORIGIN_ALLOW_ALL = True
