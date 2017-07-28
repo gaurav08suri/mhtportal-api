@@ -64,8 +64,9 @@ class Address(models.Model):
         self.address_1 = self.address_1.rstrip(string.whitespace+',')
         self.address_2 = self.address_2.rstrip(string.whitespace+',')
         self.city = self.city.rstrip(string.whitespace+',')
-        self.raw = '{}\n,{}\n,{}-{}\n,{}\n,{}'.format(
-                address_1, address_2, city, state, country, zip_code)
+        self.raw = '{},\n{},\n{}-{},\n{},\n{}\n'.format(
+                self.address_1, self.address_2, self.city,
+                self.state, self.country, self.zip_code)
 
         super().save(*args, **kwargs)
 
@@ -113,7 +114,7 @@ class Participant(models.Model):
 
     def __str__(self):
         return "Participant: {} {}\n {}".format(
-                first_name, last_name, center)
+                self.first_name, self.last_name, self.center)
 
 
 
