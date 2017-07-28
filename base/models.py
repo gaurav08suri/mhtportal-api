@@ -46,7 +46,7 @@ class Address(models.Model):
     city = models.CharField(max_length=60, help_text=_("City"))
     state = models.CharField(max_length=30, choices=STATE_CHOICES,
                             help_text=_("State"))
-    country = models.CharField(max_length=30, help_text=_("Country"))
+    country = CountryField(help_text=_("Country"))
     zip_code = models.CharField(max_length=6, validators=[ONLY_DIGITS_VALIDATOR,],
                                 help_text=_("Zip Code"))
     raw = models.TextField(blank=True)
