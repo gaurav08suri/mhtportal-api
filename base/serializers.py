@@ -3,6 +3,7 @@ from base.models import (Address,
                         Participant,
                         Profile)
 from rest_framework.serializers import ModelSerializer
+from django_countries.serializer_fields import CountryField
 
 
 
@@ -21,7 +22,8 @@ class AddressSerializer(ModelSerializer):
     """AddressSerializer serializes the Address model
     into json object and vice versa.
     """
-
+    country = CountryField()
+    
     class Meta:
         model = Address
         exclude = ()
