@@ -52,7 +52,7 @@ class EventParticipant(models.Model):
     """
 
     # Choices
-    ROLE_PARTICIPANT = 'pariticipant'
+    ROLE_PARTICIPANT = 'participant'
     ROLE_HELPER = 'helper'
     ROLE_COORDINATOR = 'coordinator'
     ROLE_CHOICES = (
