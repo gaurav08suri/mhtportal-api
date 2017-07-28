@@ -17,6 +17,8 @@ class Event(models.Model):
 
     name = models.CharField(max_length=50, help_text=_("Event Name"))
     venue = models.ForeignKey(Address, on_delete=models.CASCADE)
+    center = models.ForeignKey(Center, on_delete=models.CASCADE, related_name='center',
+                                help_text=_("Center"))
     start_date = models.DateField(help_text=_("Event Start Date"))
     end_date = models.DateField(help_text=_("Event End Date"))
     last_date_of_registration = models.DateField(
