@@ -1,12 +1,10 @@
 from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
-from rest_framework.schemas import get_schema_view
 from events.views import (EventViewSet,
                         EventParticipantViewSet)
 
 
 
-schema_view = get_schema_view(title='Events API')
 api_endpoints_default = {
         'get': 'get',
         'post': 'post',
@@ -23,8 +21,6 @@ urlpatterns = [
 
     url(r'^event-participants/list/$', EventParticipantViewSet.as_view(api_endpoints_list),
         name='event-participants-list'),
-
-    url(r'^api-info/$', schema_view, name='api-info'),
 
     url(r'^list/$', EventViewSet.as_view(api_endpoints_list), name='events-list'),
 

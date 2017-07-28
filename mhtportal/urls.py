@@ -16,10 +16,14 @@ Including another URLconf
 from django.conf.urls import (url,
                             include)
 from django.contrib import admin
+from rest_framework.schemas import get_schema_view
+
+schema_view = get_schema_view(title='Mht Portal APIs')
 
 urlpatterns = [
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^base/', include('base.urls', namespace='base')),
     url(r'^events/', include('events.urls', namespace='events')),
+    url(r'^api-info/$', schema_view, name='api-info'),
 ]
