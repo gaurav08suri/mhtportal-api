@@ -65,7 +65,7 @@ class EventParticipant(models.Model):
                                 message="Only digits allowed.")
 
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    pariticipant = models.ForeignKey(Participant, on_delete=models.CASCADE)
+    participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
     registration_no = models.CharField(max_length=20, validators=[ONLY_ALPHANUMERIC_VALIDATOR,],
                                         help_text=_("Registration Number"))
     home_center = models.ForeignKey(Center, on_delete=models.CASCADE, related_name='home_center',
