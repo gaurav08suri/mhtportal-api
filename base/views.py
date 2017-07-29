@@ -1,6 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.generics import (RetrieveAPIView,
-                                    ListAPIView)
+# from rest_framework.generics import (RetrieveAPIView,
+#                                     ListAPIView)
 from base.models import (Center,
                         Address,
                         Participant,
@@ -28,7 +28,7 @@ class MultipleFieldLookupMixin(object):
 
 
 
-class CenterView(ListAPIView):
+class CenterViewSet(ModelViewSet):
     """This endpoint Represents the Centers
 
     It presents the list of Current Centers.
@@ -38,7 +38,7 @@ class CenterView(ListAPIView):
 
 
 
-class AddressView(RetrieveAPIView):
+class AddressViewSet(ModelViewSet):
     """This endpoint Represents the Event Addresses
 
     It presents the address for the given event

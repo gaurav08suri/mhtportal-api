@@ -3,28 +3,25 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from events.views import (EventViewSet,
                         EventParticipantViewSet)
 
-
-
-api_endpoints_default = {
-        'get': 'get',
-        'post': 'post',
-        'put': 'put',
-        'patch': 'patch',
-        }
-api_endpoints_list = {
-        'get': 'list',
-        }
+api_endpoints_retrieve_update = {
+    'get': 'retrieve',
+    'patch': 'partial_update',
+    }
+api_endpoints_list_create = {
+    'get': 'list',
+    'post': 'create',
+    }
 
 urlpatterns = [
     url(r'^event-participants/(?P<pk>[0-9]+)/$', EventParticipantViewSet.as_view(
-        api_endpoints_default), name='event-participants'),
+        api_endpoints_retrieve_update), name='event-participants-retrieve-update'),
 
-    url(r'^event-participants/list/$', EventParticipantViewSet.as_view(api_endpoints_list),
-        name='event-participants-list'),
+    url(r'^event-participants/$', EventParticipantViewSet.as_view(api_endpoints_list_create),
+        name='event-participants-list-create'),
 
-    url(r'^list/$', EventViewSet.as_view(api_endpoints_list), name='events-list'),
+    url(r'^(?P<pk>[0-9]+)/$', EventViewSet.as_view(api_endpoints_retrieve_update), name='events-retrieve-update'),
 
-    url(r'^(?P<pk>[0-9]+)/$', EventViewSet.as_view(api_endpoints_default), name='events'),
+    url(r'^$', EventViewSet.as_view(api_endpoints_list_create), name='events-list-create'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
