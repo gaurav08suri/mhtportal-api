@@ -1,7 +1,5 @@
 from django.db import models
 from django.core.validators import RegexValidator
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django_countries.fields import CountryField
 from django.utils.translation import ugettext as _
@@ -151,22 +149,5 @@ class Profile(models.Model):
                                 help_text=_("Age Group lower limit"))
     max_age = models.CharField(max_length=2, validators=[ONLY_DIGITS_VALIDATOR,],
                                 help_text=_("Age Group Upper limit"))
-
-
-
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    """Create Profile when the User is created."""
-
-    if created:
-        Profile.objects.create(user=instance)
-
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    """Save Profile when the User is modified"""
-    instance.profile.save()
-
 
 
