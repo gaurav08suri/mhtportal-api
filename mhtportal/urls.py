@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^base/', include('base.urls', namespace='base')),
     url(r'^events/', include('events.urls', namespace='events')),
+    url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(r'^api-info/$', schema_view, name='api-info'),
 ]
