@@ -14,7 +14,7 @@ class CenterSerializer(ModelSerializer):
 
     class Meta:
         model = Center
-        exclude = ()
+        fields = '__all__'
 
 
 
@@ -26,7 +26,7 @@ class AddressSerializer(ModelSerializer):
     
     class Meta:
         model = Address
-        exclude = ()
+        fields = '__all__'
 
 
 
@@ -37,7 +37,7 @@ class ParticipantSerializer(ModelSerializer):
 
     class Meta:
         model = Participant
-        exclude = ()
+        fields = '__all__'
 
 
 
@@ -48,7 +48,7 @@ class ProfileSerializer(ModelSerializer):
 
     class Meta:
         model = Profile
-        exclude = ()
+        fields = '__all__'
 
 
 
