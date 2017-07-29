@@ -21,7 +21,11 @@ class EventSerializer(ModelSerializer):
         address_data = validated_data.pop('venue')
 
         # Create address and link it with event
-        address = Address.objects.create(**address_data)
+        try:
+            address = Address.objects.get(**address_data)
+        # What should do I here? Probably there are similar Addressess
+        except Exception as e:
+            address = Address.objects.create(**address_data)
         event = Event.objects.create(venue=address, **validated_data)
 
         return event
@@ -45,7 +49,12 @@ class EventParticipantSerializer(ModelSerializer):
         participant_data = validated_data.pop('participant')
 
         # Create participant and link him with event
-        participant = Participant.objects.create(**participant_data)
+        try:
+            participant = Participant.objects.get(**participant_data)
+        # What should do I here? Probably there are similar participants
+        except Exception as e:
+            participant = Participant.objects.create(**participant_data)
+
         event_participant = EventParticipant.objects.create(participant=participant, **validated_data)
 
         return event_participant
