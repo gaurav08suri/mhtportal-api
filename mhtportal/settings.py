@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'localflavor',
     'django_countries',
     'corsheaders',
+    'oauth2_provider',
 
     # in-house apps
     'base.apps.BaseConfig',
