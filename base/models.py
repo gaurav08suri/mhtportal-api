@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import RegexValidator
+from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django_countries.fields import CountryField
 from django.utils.translation import ugettext as _
