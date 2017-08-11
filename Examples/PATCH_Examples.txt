@@ -1,0 +1,139 @@
+----------------------------------------------PATCH Examples:-----------------------------------------------------
+
+
+=====================================================BASE=========================================================
+
+
+/base/centers/1/
+
+    {
+        "id": 1,
+        "name": "test_center_patched"
+    }
+
+
+/base/addressess/1/
+
+    {
+        "id": 1,
+        "country": "IN",
+        "address_1": "address",
+        "address_2": "",
+        "city": "test_city",
+        "state": "GJ",
+        "zip_code": "382654",
+        "raw": "address,\n,\ntest_city-GJ,\nIN,\n382654\n"
+    }
+
+
+/base/participants/2/
+
+    {
+        "id": 2,
+        "first_name": "test",
+        "last_name": "test",
+        "date_of_birth": "2003-01-28",
+        "mobile": "+911234567897",
+        "gender": "male",
+        "other_center": "",
+        "father_name": "test",
+        "father_mobile": "+911234567897",
+        "email": "",
+        "mother_name": "",
+        "mother_mobile": "",
+        "center": 1
+    }
+
+
+/base/profiles/1/
+
+{
+    "id": 1,
+    "gender": "female",
+    "mobile": "+911234567897",
+    "min_age": "13",
+    "max_age": "17",
+    "user": 1,
+    "center": 1
+}
+
+
+==================================================================================================================
+
+
+====================================================EVENTS========================================================
+
+
+/events/1/
+
+{
+    "id": 1,
+    "venue": {
+        "id": 2,
+        "country": "IN",
+        "address_1": "address",
+        "address_2": "",
+        "city": "some_city",
+        "state": "GJ",
+        "zip_code": "382654",
+        "raw": "address,\n,\nsome_city-GJ,\nIN,\n382654\n"
+    },
+    "name": "test_event_2",
+    "start_date": "2003-01-28",
+    "end_date": "2003-01-28",
+    "last_date_of_registration": "2003-01-28",
+    "fees": "500.00",
+    "late_fees": "600.00",
+    "accommodation_provided": true,
+    "min_age": "13",
+    "max_age": "17",
+    "rules": "none",
+    "remarks": "none",
+    "center": 1
+}
+
+
+/events/event-participants/1/
+
+{
+    "id": 1,
+    "participant": {
+        "id": 2,
+        "first_name": "test",
+        "last_name": "test",
+        "date_of_birth": "2003-01-28",
+        "mobile": "+911234567897",
+        "gender": "male",
+        "other_center": "",
+        "father_name": "test",
+        "father_mobile": "+911234567897",
+        "email": "",
+        "mother_name": "",
+        "mother_mobile": "",
+        "center": 1
+    },
+    "registration_no": "234",
+    "accommodation": true,
+    "payment_status": false,
+    "amount_paid": "500.00",
+    "cashier": "hello",
+    "role": "participant",
+    "event": 1,
+    "home_center": 1,
+    "event_center": 1
+}
+
+
+==================================================================================================================
+
+
+====================================================NOTES========================================================
+
+
+1. In Event Participant If you don't want to create new Participant or if you want to use already created participant
+   please, also pass the id of the existing participant. Otherwise new participant will be created by default
+
+2. In Event, If you don't want to create new address/venue or if you want to use already created address, please
+   pass the id of the exisisting address/venue. Otherwise new address will be created by default
+
+3. You need to pass the id for the foreign keys unless explicitly specified
