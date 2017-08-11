@@ -59,7 +59,7 @@ class EventParticipantSerializer(ModelSerializer):
     class Meta:
         model = EventParticipant
         fields = '__all__'
-
+        read_only_fields = ('registration_no',)
 
     def create(self, validated_data):
         # event_data = validated_data.pop('event')
