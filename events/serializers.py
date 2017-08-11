@@ -20,12 +20,12 @@ class EventSerializer(ModelSerializer):
     def create(self, validated_data):
         address_data = validated_data.pop('venue')
 
-        # Create address and link it with event
+        # only create if not already there
         try:
             address = Address.objects.get(**address_data)
-        # What should do I here? Probably there are similar Addressess
-        except Exception as e:
+        except Address.DoesNotExist:
             address = Address.objects.create(**address_data)
+
         event = Event.objects.create(venue=address, **validated_data)
 
         return event
@@ -65,11 +65,10 @@ class EventParticipantSerializer(ModelSerializer):
         # event_data = validated_data.pop('event')
         participant_data = validated_data.pop('participant')
 
-        # Create participant and link him with event
+        # only create if not already there
         try:
             participant = Participant.objects.get(**participant_data)
-        # What should do I here? Probably there are similar participants
-        except Exception as e:
+        except Participant.DoesNotExist:
             participant = Participant.objects.create(**participant_data)
 
         event_participant = EventParticipant.objects.create(participant=participant, **validated_data)
