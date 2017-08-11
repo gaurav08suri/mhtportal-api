@@ -32,6 +32,23 @@ class EventSerializer(ModelSerializer):
 
 
 
+    def update(self, instance, validated_data):
+        address_data = validated_data.pop('venue')
+
+        # update participant
+        for key, value in address_data.items():
+            setattr(instance.venue, key, value)
+
+        # update event participant data
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+
+        instance.venue.save()
+        instance.save()
+        return instance
+
+
+
 class EventParticipantSerializer(ModelSerializer):
     """EventParticipantSerializer serializes EventPariticpant model
     to json object and vice versa.
@@ -58,3 +75,22 @@ class EventParticipantSerializer(ModelSerializer):
         event_participant = EventParticipant.objects.create(participant=participant, **validated_data)
 
         return event_participant
+
+
+
+    def update(self, instance, validated_data):
+        participant_data = validated_data.pop('participant')
+
+        # update participant
+        for key, value in participant_data.items():
+            setattr(instance.participant, key, value)
+
+        # update event participant data
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+
+        instance.participant.save()
+        instance.save()
+        return instance
+
+
