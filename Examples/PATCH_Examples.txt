@@ -96,7 +96,7 @@
 /events/event-participants/1/
 
 {
-    "id": 1,
+    "registration_no": 1,
     "participant": {
         "id": 2,
         "first_name": "test",
@@ -112,11 +112,12 @@
         "mother_mobile": "",
         "center": 1
     },
-    "registration_no": "234",
     "accommodation": true,
     "payment_status": false,
     "amount_paid": "500.00",
     "cashier": "hello",
+    "big_buddy": "haha",
+    "goal_achievement": "no idea",
     "role": "participant",
     "event": 1,
     "home_center": 1,

@@ -66,8 +66,7 @@ class EventParticipant(models.Model):
 
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
-    registration_no = models.CharField(max_length=20, validators=[ONLY_ALPHANUMERIC_VALIDATOR,],
-                                        help_text=_("Registration Number"))
+    registration_no = models.BigAutoField(primary_key=True, help_text=_("Registration Number"))
     home_center = models.ForeignKey(Center, on_delete=models.CASCADE, related_name='home_center',
                                     help_text=_("Home Center"))
     event_center = models.ForeignKey(Center, on_delete=models.CASCADE, blank=True, null=True,
@@ -75,7 +74,9 @@ class EventParticipant(models.Model):
     accommodation = models.BooleanField(help_text=_("Is Accommodation Required?"))
     payment_status = models.BooleanField(help_text=_("Has paid?"))
     amount_paid = models.DecimalField(max_digits=10, decimal_places=2, help_text=_("Amount Paid"))
-    cashier = models.CharField(max_length=50, help_text=_("Cashier"))
+    cashier = models.CharField(max_length=50, help_text=_("Cashier"), blank=True)
+    big_buddy = models.CharField(max_length=50, help_text=_("Big Buddy"), blank=True)
+    goal_achievement = models.CharField(max_length=100, help_text=_("Goal Achievement"), blank=True)
     role = models.CharField(max_length=12, choices=ROLE_CHOICES, help_text=_("Role"))
 
 
