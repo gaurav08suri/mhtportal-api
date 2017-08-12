@@ -1,8 +1,13 @@
+import logging
 from rest_framework.serializers import ModelSerializer
 from events.models import (Event, EventParticipant)
 from base.models import (Participant, Address)
 from base.serializers import (ParticipantSerializer,
                                 AddressSerializer)
+
+
+logger = logging.getLogger(__name__)
+
 
 
 class EventSerializer(ModelSerializer):
@@ -27,6 +32,7 @@ class EventSerializer(ModelSerializer):
             address = Address.objects.create(**address_data)
 
         event = Event.objects.create(venue=address, **validated_data)
+        logger.info('Created Event {}'.format(event.name))
 
         return event
 
@@ -45,6 +51,8 @@ class EventSerializer(ModelSerializer):
 
         instance.venue.save()
         instance.save()
+        logger.info('Updated Event {}'.format(instance.name))
+
         return instance
 
 
@@ -72,6 +80,7 @@ class EventParticipantSerializer(ModelSerializer):
             participant = Participant.objects.create(**participant_data)
 
         event_participant = EventParticipant.objects.create(participant=participant, **validated_data)
+        logger.info('Created Event Participant. Registration no: {}'.format(event_participant.registration_no))
 
         return event_participant
 
@@ -90,6 +99,8 @@ class EventParticipantSerializer(ModelSerializer):
 
         instance.participant.save()
         instance.save()
+        logger.info('Updated Event Participant. Registration no: {}'.format(instance.registration_no))
+
         return instance
 
 

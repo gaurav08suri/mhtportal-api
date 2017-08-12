@@ -1,3 +1,4 @@
+import logging
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from mhtportal.settings import (SMS_URL,
@@ -6,6 +7,10 @@ from mhtportal.settings import (SMS_URL,
                                 SENDER_ID) 
 from base.models import Participant
 from base.tasks import send_sms_async
+
+
+
+logger = logging.getLogger(__name__)
 
 
 
@@ -19,6 +24,6 @@ def send_sms(sender, instance, created, **kwargs):
             send_sms_async.delay(url)
 
         except Exception as e:
-            print(e)
+            logger.exception('while sending sms')
 
 
