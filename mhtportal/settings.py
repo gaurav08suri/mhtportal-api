@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'django_countries',
     'corsheaders',
     'oauth2_provider',
+    'django_celery_beat',
+    'django_celery_results',
 
     # in-house apps
     'base.apps.BaseConfig',
@@ -154,3 +156,21 @@ CORS_REPLACE_HTTPS_REFERER=True
 
 # Please don't use this in production
 CORS_ORIGIN_ALLOW_ALL = True
+
+
+
+# celery settings
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = TIME_ZONE
+
+
+
+# SMS Backend settings
+SMS_URL = 'http://bhashsms.com/api/sendmsg.php?user={0}&pass={1}&sender={2}&phone={3}&text={4}&priority=ndnd&stype=normal'
+SMS_USER = 'ymht'
+SMS_PASS = 'Py!Dj@ng0Ch@rm9'
+SENDER_ID = 'mhtsms'
