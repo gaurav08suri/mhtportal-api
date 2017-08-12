@@ -1,20 +1,21 @@
+import logging
 import requests
 from celery import shared_task
 
 
 
+logger = logging.getLogger(__name__)
+
+
+
 @shared_task
 def send_sms_async(url, params=None):
-    print('--------------')
-    print('sending sms')
     try:
         if params:
             requests.post(url, data=params)
         else:
-            print('calling get')
-            print(url)
             requests.get(url)
     except requests.RequestException as e:
-        print(e)
+        logger.exception('While sending sms using requests')
 
 
