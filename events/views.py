@@ -1,5 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import (IsAuthenticated,
+                                        IsAuthenticatedOrReadOnly)
 from events.models import (Event,
                             EventParticipant)
 from events.serializers import (EventSerializer,
@@ -13,7 +14,7 @@ class EventViewSet(ModelViewSet):
     It can create/update/retrieve an Event
     It also presents lists of Events
     """
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = Event.objects.all()
     serializer_class = EventSerializer
 
