@@ -18,7 +18,7 @@ services:
     volumes:
       - .:/code
     ports:
-      - "8000:8000"
+      - "80:8000"
     links:
       - db
       - redis
@@ -29,6 +29,8 @@ services:
   worker:
     build: .
     command: bash -c "sleep 12 && celery worker --app mhtportal --loglevel INFO --logfile ./logs/worker.log"
+    volumes:
+      - .:/code
     links:
       - db
       - redis
@@ -39,6 +41,8 @@ services:
   beat:
     build: .
     command: bash -c "sleep 15 && celery beat --app mhtportal --loglevel INFO --logfile ./logs/beat.log"
+    volumes:
+      - .:/code
     links:
       - db
       - redis
