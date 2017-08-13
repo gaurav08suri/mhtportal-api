@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^centers/(?P<pk>[0-9]+)/$', CenterViewSet.as_view(
         api_endpoints_retrieve_update),name='centers-retrieve-update'),
 
-    url(r'^addressess/(?P<pk>[0-9]+)/$', AddressViewSet.as_view(
+    url(r'^addresses/(?P<pk>[0-9]+)/$', AddressViewSet.as_view(
         api_endpoints_retrieve_update), name='addressess-retrieve-update'),
 
     url(r'^participants/(?P<pk>[0-9]+)/$', ParticipantViewSet.as_view(
@@ -34,7 +34,7 @@ urlpatterns = [
     url(r'^centers/$', CenterViewSet.as_view(
         api_endpoints_list_create),name='centers-list-create'),
 
-    url(r'^addressess/$', AddressViewSet.as_view(
+    url(r'^addresses/$', AddressViewSet.as_view(
         api_endpoints_list_create), name='addressess-list-create'),
 
     url(r'^participants/$', ParticipantViewSet.as_view(
