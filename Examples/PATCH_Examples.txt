@@ -12,7 +12,7 @@
     }
 
 
-/base/addressess/1/
+/base/addresses/1/
 
     {
         "id": 1,

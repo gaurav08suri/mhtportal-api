@@ -12,7 +12,7 @@
     }
 
 
-/base/addressess/
+/base/addresses/
 
     {
         "country": "India",
