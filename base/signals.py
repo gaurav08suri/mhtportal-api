@@ -18,8 +18,14 @@ logger = logging.getLogger(__name__)
 def send_sms(sender, instance, created, **kwargs):
     if created:
         sms_string = 'Your Registration is now Complete'
+
         # Because the sms vendor auto adds 91 to the number, we'll have to remove ours
-        url = SMS_URL.format(SMS_USER, SMS_PASS, SENDER_ID, str(instance.mobile)[3:], sms_string)
+        # Note: This is a hack and only works for India numbers. Please don't use this in
+        # production.
+        mobile = str(instance.mobile)
+        if ('+' in mobile) or ('91' in mobile[0:3]):
+            mobile = mobile[3:]
+        url = SMS_URL.format(SMS_USER, SMS_PASS, SENDER_ID, mobile, sms_string)
         try:
             send_sms_async.delay(url)
 
