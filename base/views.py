@@ -1,6 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
-# from rest_framework.generics import (RetrieveAPIView,
-#                                     ListAPIView)
+from rest_framework.permissions import IsAuthenticated
 from base.models import (Center,
                         Address,
                         Participant,
@@ -54,6 +53,7 @@ class ParticipantViewSet(ModelViewSet):
     It can create/update/retrieve an Participant
     It also presents lists of Participants
     """
+    permission_classes = (IsAuthenticated,)
     queryset = Participant.objects.all()
     serializer_class = ParticipantSerializer
 
@@ -65,6 +65,8 @@ class ProfileViewSet(ModelViewSet):
     It can create/update/retrieve an Profile
     It also presents lists of Profiles
     """
+    permission_classes = (IsAuthenticated,)
+
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 

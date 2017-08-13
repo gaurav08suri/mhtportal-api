@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'localflavor',
     'django_countries',
     'corsheaders',
-    'oauth2_provider',
     'django_celery_beat',
     'django_celery_results',
 
@@ -156,6 +155,20 @@ CORS_REPLACE_HTTPS_REFERER=True
 
 # Please don't use this in production
 CORS_ORIGIN_ALLOW_ALL = True
+
+
+
+# Rest framework settings
+REST_FRAMEWORK = {
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
 
 
 
