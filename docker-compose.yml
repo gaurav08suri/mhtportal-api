@@ -28,7 +28,7 @@ services:
   # Celery Worker
   worker:
     build: .
-    command: celery worker --app mhtportal --loglevel INFO --logfile ./logs/worker.log
+    command: bash -c "sleep 12 && celery worker --app mhtportal --loglevel INFO --logfile ./logs/worker.log"
     links:
       - db
       - redis
@@ -38,7 +38,7 @@ services:
   # Celery Beat
   beat:
     build: .
-    command: celery beat --app mhtportal --loglevel INFO --logfile ./logs/beat.log
+    command: bash -c "sleep 15 && celery beat --app mhtportal --loglevel INFO --logfile ./logs/beat.log"
     links:
       - db
       - redis

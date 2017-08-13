@@ -13,5 +13,9 @@ python manage.py migrate
 
 # start server on public ip interface, on port 8000
 # su -m electron -c "python manage.py runserver 0.0.0.0:8000"  
-gunicorn --workers 4 --bind 0.0.0.0:8000 --reload --log-level info \
-        --access-logfile ./logs/web_access.log --error-logfile ./logs/web_error.log mhtportal.wsgi
+gunicorn mhtportal.wsgi \
+         --workers 4 \
+         --bind 0.0.0.0:8000 \
+         --reload --log-level info \
+         --access-logfile ./logs/web_access.log \
+         --error-logfile ./logs/web_error.log
