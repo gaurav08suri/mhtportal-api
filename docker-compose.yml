@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  # Postgres
+  db:
+    image: postgres:9.6.4
+    environment:
+      - POSTGRES_PASSWORD=!!Docker##is^^nice9
+  
+  # Redis
+  redis:
+    image: redis:4.0.1
+
+  # Django Web Server
+  web:
+    build: .
+    command: ./run_web.sh
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    links:
+      - db
+      - redis
+    depends_on:
+      - db
+
+  # Celery Worker
+  worker:
+    build: .
+    command: celery worker --app mhtportal --loglevel INFO --logfile ./logs/worker.log
+    links:
+      - db
+      - redis
+    depends_on:
+      - redis
+
+  # Celery Beat
+  beat:
+    build: .
+    command: celery beat --app mhtportal --loglevel INFO --logfile ./logs/beat.log
+    links:
+      - db
+      - redis
+    depends_on:
+      - redis
