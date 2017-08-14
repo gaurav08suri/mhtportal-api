@@ -28,6 +28,7 @@ class Event(models.Model):
     late_fees = models.DecimalField(max_digits=10, decimal_places=2,
                                 help_text=_("Late Registration Fees"))
     accommodation_provided = models.BooleanField(help_text=_("Is Accommodation Provided?"))
+    event_code = models.CharField(max_length=20, unique=True, help_text=_("Event Code"))
 
     # This represents Age group
     min_age = models.CharField(max_length=2, validators=[ONLY_DIGITS_VALIDATOR,],
@@ -60,13 +61,9 @@ class EventParticipant(models.Model):
             (ROLE_HELPER, 'Helper'),
             (ROLE_COORDINATOR, 'Coordinator'))
 
-    # Validators
-    ONLY_ALPHANUMERIC_VALIDATOR = RegexValidator(regex=r'^[0-9 a-z A-Z]*$',
-                                message="Only digits allowed.")
-
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
-    registration_no = models.BigAutoField(primary_key=True, help_text=_("Registration Number"))
+    registration_no = models.CharField(max_length=20, unique=True, help_text=_("Registration Number"))
     home_center = models.ForeignKey(Center, on_delete=models.CASCADE, related_name='home_center',
                                     help_text=_("Home Center"))
     event_center = models.ForeignKey(Center, on_delete=models.CASCADE, blank=True, null=True,
