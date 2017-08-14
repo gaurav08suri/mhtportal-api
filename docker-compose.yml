@@ -6,6 +6,8 @@ services:
     image: postgres:9.6.4
     environment:
       - POSTGRES_PASSWORD=!!Docker##is^^nice9
+    volumes:
+      - ./database/postgresql:/var/lib/postgresql/data
   
   # Redis
   redis:
@@ -28,7 +30,11 @@ services:
   # Celery Worker
   worker:
     build: .
-    command: bash -c "sleep 12 && celery worker --app mhtportal --loglevel INFO --logfile ./logs/worker.log"
+    command: > 
+              bash -c "sleep 12 && celery worker 
+              --app mhtportal 
+              --loglevel INFO 
+              --logfile ./logs/worker.log"
     volumes:
       - .:/code
     links:
@@ -40,7 +46,11 @@ services:
   # Celery Beat
   beat:
     build: .
-    command: bash -c "sleep 15 && celery beat --app mhtportal --loglevel INFO --logfile ./logs/beat.log"
+    command: > 
+              bash -c "sleep 15 && celery beat 
+              --app mhtportal 
+              --loglevel INFO 
+              --logfile ./logs/beat.log"
     volumes:
       - .:/code
     links:
