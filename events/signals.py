@@ -1,7 +1,11 @@
-from django.db.models.signals import pre_save
+from django.db.models.signals import (pre_save,
+                                        post_save)
 from django.dispatch import receiver
+from django.conf import settings
+from base.models import Profile
 from events.models import (Event, 
                             EventParticipant)
+from events.tasks import send_sms_async
 
 
 
@@ -49,5 +53,35 @@ def generate_registration_no(sender, instance, **kwargs):
         instance.registration_no = ec + str(total_registered+1)
     else:
         instance.registration_no = ec + '1'
+
+
+
+@receiver(post_save, sender=EventParticipant)
+def send_sms(sender, instance, created, **kwargs):
+    if created:
+
+        # Get mobile number of coordinator of the center of the current pariticipant
+        profile_filter = Profile.objects.filter(center=instance.home_center, gender=instance.participant.gender, 
+                                                min_age=instance.event.min_age, max_age=instance.event.max_age)
+        if not profile_filter.exists():
+            pm = ''
+        else:
+            pm = profile_filter.order_by('id').first().mobile
+
+        sms_string = settings.SMS_TEMPLATE.format(instance.registration_no, int(instance.event.fees), pm)
+
+        # Because the sms vendor auto adds 91 to the number, we'll have to remove ours
+        # Note: This is a hack and only works for India numbers. Please don't use this in
+        # production.
+        mobile = str(instance.participant.mobile)
+        if ('+' in mobile) or ('91' in mobile[0:3]):
+            mobile = mobile[3:]
+        url = settings.SMS_URL.format(settings.SMS_USER, settings.SMS_PASS, settings.SENDER_ID, mobile, sms_string)
+        try:
+            # pass
+            send_sms_async.delay(url)
+
+        except Exception as e:
+            logger.exception('while sending sms')
 
 

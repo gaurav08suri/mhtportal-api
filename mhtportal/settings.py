@@ -187,6 +187,10 @@ CELERY_TIMEZONE = TIME_ZONE
 
 
 # SMS Backend settings
+SMS_TEMPLATE = ('Registration complete. Reg. No. {}. '
+                'You\'ll need to pay {}Rs. fees at your local center. '
+                'You can contact your local center for more info at {}'
+                )
 SMS_URL = 'http://bhashsms.com/api/sendmsg.php?user={0}&pass={1}&sender={2}&phone={3}&text={4}&priority=ndnd&stype=normal'
 SMS_USER = 'ymht'
 SMS_PASS = 'Py!Dj@ng0Ch@rm9'
