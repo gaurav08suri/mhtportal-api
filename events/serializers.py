@@ -1,4 +1,6 @@
 import logging
+from django.core.exceptions import MultipleObjectsReturned
+from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import ModelSerializer
 from events.models import (Event, EventParticipant)
 from base.models import (Participant, Address)
@@ -31,6 +33,8 @@ class EventSerializer(ModelSerializer):
             address = Address.objects.get(**address_data)
         except Address.DoesNotExist:
             address = Address.objects.create(**address_data)
+        except MultipleObjectsReturned:
+            raise ValidationError
 
         event = Event.objects.create(venue=address, **validated_data)
         logger.info('Created Event {}'.format(event.name))
@@ -79,6 +83,8 @@ class EventParticipantSerializer(ModelSerializer):
             participant = Participant.objects.get(**participant_data)
         except Participant.DoesNotExist:
             participant = Participant.objects.create(**participant_data)
+        except MultipleObjectsReturned:
+            raise ValidationError
 
         event_participant = EventParticipant.objects.create(participant=participant, **validated_data)
         logger.info('Created Event Participant. Registration no: {}'.format(event_participant.registration_no))
