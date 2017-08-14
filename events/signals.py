@@ -31,7 +31,7 @@ def generate_event_code(sender, instance, **kwargs):
                 s += w[i][:i+1].upper()
     
     fs = '{}-{}'.format(s, y)
-    events = Event.objects.all().filter(event_code=fs)
+    events = Event.objects.filter(event_code=fs)
     # event code not unique
     if events.exists():
         similar_events = len(events)
@@ -48,7 +48,7 @@ def generate_registration_no(sender, instance, **kwargs):
         ec += '-M-'
     else:
         ec += '-F-'
-    total_registered = len(EventParticipant.objects.all().filter(event=instance.event).order_by('id'))
+    total_registered = len(EventParticipant.objects.filter(event=instance.event).order_by('id'))
     if total_registered:
         instance.registration_no = ec + str(total_registered+1)
     else:
