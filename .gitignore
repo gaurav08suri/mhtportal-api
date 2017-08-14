@@ -102,3 +102,4 @@ logs/
 
 # database
 database/
+celerybeat.pid
