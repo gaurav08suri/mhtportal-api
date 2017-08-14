@@ -1,12 +1,7 @@
-import logging
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from events.models import (Event, 
                             EventParticipant)
-
-
-
-logger = logging.getLogger(__name__)
 
 
 
@@ -40,8 +35,6 @@ def generate_event_code(sender, instance, **kwargs):
     else:
         instance.event_code = fs
 
-    logger.info('created event_code: {}'.format(instance.event_code))
-
 
 
 @receiver(pre_save, sender=EventParticipant)
@@ -56,7 +49,5 @@ def generate_registration_no(sender, instance, **kwargs):
         instance.registration_no = ec + str(total_registered+1)
     else:
         instance.registration_no = ec + '1'
-
-    logger.info('created registration no: {}'.format(instance.registration_no))
 
 
