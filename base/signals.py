@@ -1,10 +1,7 @@
 import logging
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from mhtportal.settings import (SMS_URL,
-                                SMS_USER,
-                                SMS_PASS,
-                                SENDER_ID) 
+from django.conf import settings
 from base.models import Participant
 from base.tasks import send_sms_async
 
@@ -25,7 +22,7 @@ def send_sms(sender, instance, created, **kwargs):
         mobile = str(instance.mobile)
         if ('+' in mobile) or ('91' in mobile[0:3]):
             mobile = mobile[3:]
-        url = SMS_URL.format(SMS_USER, SMS_PASS, SENDER_ID, mobile, sms_string)
+        url = settings.SMS_URL.format(settings.SMS_USER, settings.SMS_PASS, settings.SENDER_ID, mobile, sms_string)
         try:
             send_sms_async.delay(url)
 
