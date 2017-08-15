@@ -48,7 +48,8 @@ def generate_registration_no(sender, instance, **kwargs):
         ec += '-M-'
     else:
         ec += '-F-'
-    total_registered = len(EventParticipant.objects.filter(event=instance.event).order_by('id'))
+    total_registered = len(EventParticipant.objects.filter(event=instance.event, 
+                            participant__gender=instance.participant.gender).order_by('id'))
     if total_registered:
         instance.registration_no = ec + str(total_registered+1)
     else:
