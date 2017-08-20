@@ -14,6 +14,8 @@ class Center(models.Model):
     """
 
     name = models.CharField(max_length=50, help_text=_("Center Name"))
+    parent = models.ForeignKey('self', null=True, default=None, on_delete=models.CASCADE)
+    is_displayed = models.BooleanField(default=True, help_text=_("Should the center be displayed?"))
 
     def __str__(self):
         return "Center: {}".format(self.name)
