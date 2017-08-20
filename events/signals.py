@@ -1,9 +1,10 @@
+from django.utils import timezone
 from django.db.models.signals import (pre_save,
                                         post_save)
 from django.dispatch import receiver
 from django.conf import settings
 from base.models import Profile
-from events.models import (Event, 
+from events.models import (Event,
                             EventParticipant)
 from events.tasks import send_sms_async
 
@@ -11,12 +12,12 @@ from events.tasks import send_sms_async
 
 @receiver(pre_save, sender=Event)
 def generate_event_code(sender, instance, **kwargs):
-        
+
     l = len(instance.name)
     s = ''
     y = instance.start_date.year
     if (l <= 6):
-        s += instance.name.upper() 
+        s += instance.name.upper()
     else:
         words = instance.name.strip().split(' ')
         l = len(words)
@@ -29,7 +30,7 @@ def generate_event_code(sender, instance, **kwargs):
                 if (len(s) > 8):
                     break
                 s += w[i][:i+1].upper()
-    
+
     fs = '{}-{}'.format(s, y)
     events = Event.objects.filter(event_code=fs)
     # event code not unique
@@ -48,7 +49,7 @@ def generate_registration_no(sender, instance, **kwargs):
         ec += '-M-'
     else:
         ec += '-F-'
-    total_registered = len(EventParticipant.objects.filter(event=instance.event, 
+    total_registered = len(EventParticipant.objects.filter(event=instance.event,
                             participant__gender=instance.participant.gender).order_by('id'))
     if total_registered:
         instance.registration_no = ec + str(total_registered+1)
@@ -61,9 +62,12 @@ def generate_registration_no(sender, instance, **kwargs):
 def send_sms(sender, instance, created, **kwargs):
     if created:
 
+        born = instance.participant.date_of_birth
+        today = timezone.now().today()
+        age = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
         # Get mobile number of coordinator of the center of the current pariticipant
-        profile_filter = Profile.objects.filter(center=instance.home_center, gender=instance.participant.gender, 
-                                                min_age=instance.event.min_age, max_age=instance.event.max_age)
+        profile_filter = Profile.objects.filter(center=instance.home_center, gender=instance.participant.gender,
+                                                min_age__lte=age, max_age__gte=age)
         if not profile_filter.exists():
             pm = ''
         else:
