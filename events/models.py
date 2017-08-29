@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from django.utils.translation import ugettext as _
 from django.core.validators import RegexValidator
@@ -12,6 +13,11 @@ class Event(models.Model):
     """
 
     # Choices
+    YEAR_CHOICES = []
+    curr_year = datetime.datetime.now().year
+    for r in range(curr_year, curr_year+5):
+        YEAR_CHOICES.append((r,r))
+
     GENDER_FEMALE = 'female'
     GENDER_MALE = 'male'
     GENDER_CHOICES = (
@@ -25,6 +31,8 @@ class Event(models.Model):
     name = models.CharField(max_length=50, help_text=_("Event Name"))
     venue = models.ForeignKey(Address, on_delete=models.CASCADE)
     center = models.ForeignKey(Center, on_delete=models.CASCADE, help_text=_("Center"))
+    year = models.IntegerField(max_length=4, choices=YEAR_CHOICES, default=curr_year,
+                                help_text=_('year'))
     start_date = models.DateField(help_text=_("Event Start Date"))
     end_date = models.DateField(help_text=_("Event End Date"))
     last_date_of_registration = models.DateField(
