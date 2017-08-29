@@ -1,3 +1,4 @@
+import re
 from django.utils import timezone
 from django.db.models.signals import (pre_save,
                                         post_save)
@@ -15,21 +16,27 @@ def generate_event_code(sender, instance, **kwargs):
 
     l = len(instance.name)
     s = ''
-    y = instance.start_date.year
+    y = instance.year
     if (l <= 6):
         s += instance.name.upper()
     else:
+        only_alphanum = re.compile(r'[^a-zA-z0-9]')
         words = instance.name.strip().split(' ')
         l = len(words)
+
+        # strip any non alphanumeric characters
+        for i in range(l):
+            words[i] = only_alphanum.sub('', words[i]).upper()
+
         if (l == 1):
-            s += words[0][:2].upper() + words[0][:-3:-1].upper()
+            s += words[0][:2] + words[0][:-3:-1]
         elif (l > 1 and l < 4):
-            s += ''.join([w[i][:3].upper() for i, w in enumerate(words)])
+            s += ''.join([words[i][:3] for i in range(l)])
         else:
-            for i, w in enumerate(words):
+            for i in range(l):
                 if (len(s) > 8):
                     break
-                s += w[i][:i+1].upper()
+                s += words[i][:i+1]
 
     fs = '{}-{}'.format(s, y)
     events = Event.objects.filter(event_code=fs)
