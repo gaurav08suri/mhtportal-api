@@ -11,6 +11,13 @@ class Event(models.Model):
     venue field is an foreign key to :model: `base.Address`
     """
 
+    # Choices
+    GENDER_FEMALE = 'female'
+    GENDER_MALE = 'male'
+    GENDER_CHOICES = (
+            (GENDER_FEMALE, 'Female'),
+            (GENDER_MALE, 'Male'))
+
     # Validators
     ONLY_DIGITS_VALIDATOR = RegexValidator(regex=r'^[0-9]*$',
                                 message="Only digits allowed.")
@@ -28,7 +35,7 @@ class Event(models.Model):
                                 help_text=_("Late Registration Fees"))
     accommodation_provided = models.BooleanField(help_text=_("Is Accommodation Provided?"))
     event_code = models.CharField(max_length=20, unique=True, help_text=_("Event Code"))
-
+    gender = models.CharField(max_length=6, choices=GENDER_CHOICES, blank=True)
     # This represents Age group
     min_age = models.CharField(max_length=2, validators=[ONLY_DIGITS_VALIDATOR,],
                                 help_text=_("Age Group Lower limit"))
