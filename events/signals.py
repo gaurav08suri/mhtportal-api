@@ -51,6 +51,12 @@ def generate_event_code(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=EventParticipant)
 def generate_registration_no(sender, instance, **kwargs):
+
+    # no need to create if already there. I know there's a better way to
+    # achieve this.
+    if instance.registration_no:
+        return
+
     ec = instance.event.event_code
     if instance.participant.gender == 'male':
         ec += '-M-'
