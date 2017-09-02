@@ -27,9 +27,10 @@ def main():
             exit(-1)
 
         username = '{}_{}'.format(row[5], row[1][:5])
+        password = 'admin@{}#'.format(username)
         try:
             u, _ = User.objects.get_or_create(
-                username=username, first_name=username, password=username)
+                username=username, first_name=username, password=password)
         except MultipleObjectsReturned:
             print("Don't know what to do here")
             print("multiple users returned")
