@@ -1,3 +1,6 @@
+from django.shortcuts import get_object_or_404
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from base.models import (Center,
@@ -24,6 +27,25 @@ class MultipleFieldLookupMixin(object):
             if self.kwargs[field]: # Ignore empty fields.
                 filter[field] = self.kwargs[field]
         return get_object_or_404(queryset, **filter)  # Lookup the object
+
+
+
+class MeView(APIView):
+    """
+    Display Profile of current logged in User.
+
+    * Requires authentication.
+    * Only logged in users are able to access this view.
+    """
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        """
+        Return Profile of current logged in user.
+        """
+        profile = get_object_or_404(Profile, user=request.user)
+        ps = ProfileSerializer(profile)
+        return Response(ps.data)
 
 
 

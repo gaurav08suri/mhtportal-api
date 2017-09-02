@@ -20,6 +20,7 @@ from rest_framework.schemas import get_schema_view
 from rest_framework_jwt.views import (obtain_jwt_token,
                                         refresh_jwt_token,
                                         verify_jwt_token)
+from base.views import MeView
 
 
 schema_view = get_schema_view(title='Mht Portal APIs')
@@ -27,6 +28,7 @@ schema_view = get_schema_view(title='Mht Portal APIs')
 urlpatterns = [
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^me/', MeView.as_view(), name="me"),
     url(r'^base/', include('base.urls', namespace='base')),
     url(r'^events/', include('events.urls', namespace='events')),
     url(r'^api-info/$', schema_view, name='api-info'),
