@@ -2,6 +2,12 @@ API EndPoints:
 --------------
 
 
+=====================================================ROOT=========================================================
+me/                                                                 ['get' -> retrieve,]
+events/                                                             ['get' -> list, 'post' -> create]
+==================================================================================================================
+
+
 =====================================================BASE=========================================================
 base/centers/(?P<pk>[0-9]+)/                                        ['get' -> retrieve, 'patch' -> partial update]
 base/addresses/(?P<pk>[0-9]+)/                                      ['get' -> retrieve, 'patch' -> partial update]
@@ -18,6 +24,5 @@ base/profiles/                                                      ['get' -> li
 events/event-participants/(?P<pk>[0-9]+)/                           ['get' -> retrieve, 'patch' -> partial update]
 events/(?P<pk>[0-9]+)/                                              ['get' -> retrieve, 'patch' -> partial update]
 events/event-participants/                                          ['get' -> list, 'post' -> create]
-events/                                                             ['get' -> list, 'post' -> create]
 ==================================================================================================================
 
