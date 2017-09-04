@@ -113,7 +113,7 @@ class Address(models.Model):
 
         self.address_1 = self.address_1.rstrip(string.whitespace+',')
         self.address_2 = self.address_2.rstrip(string.whitespace+',')
-        self.city = self.city.rstrip(string.whitespace+',')
+        self.city = self.city.rstrip(string.whitespace+',').title()
         self.raw = '{},\n{},\n{}-{},\n{},\n{}\n'.format(
                 self.address_1, self.address_2, self.city,
                 self.state, self.country, self.zip_code)
