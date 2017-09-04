@@ -12,6 +12,23 @@
     }
 
 
+/base/center-scopes/
+
+    {
+        "gender": "male",
+        "min_age": "13",
+        "max_age": "17"
+    }
+
+
+/base/scoped-centers/
+
+    {
+        "center": 1,
+        "center_scope": 1
+    }
+
+
 /base/addresses/
 
     {
@@ -26,7 +43,7 @@
 
 
 /base/participants
-    Currently It shouldn't be allowed. You should create participant from Event Participant endpoint. 
+    Currently It shouldn't be allowed. You should create participant from Event Participant endpoint.
     For Now!
 
 
@@ -102,7 +119,7 @@
         "event_center": 1
     }
 
-    
+
 ==================================================================================================================
 
 
@@ -110,8 +127,8 @@
 
 1. In Event Participant If you don't want to create new Participant or if you want to use already created participant
    please, also pass the id of the existing participant. Otherwise new participant will be created by default
-   
+
 2. In Event, If you don't want to create new address/venue or if you want to use already created address, please
    pass the id of the exisisting address/venue. Otherwise new address will be created by default
-   
+
 3. You need to pass the id for the foreign keys unless explicitly specified

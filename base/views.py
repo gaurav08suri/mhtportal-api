@@ -4,11 +4,15 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from base.models import (Center,
+                        CenterScope,
+                        ScopedCenter,
                         Address,
                         Participant,
                         Profile)
 from base.serializers import (AddressSerializer,
                             CenterSerializer,
+                            CenterScopeSerializer,
+                            ScopedCenterSerializer,
                             ParticipantSerializer,
                             ProfileSerializer)
 
@@ -56,6 +60,26 @@ class CenterViewSet(ModelViewSet):
     """
     queryset = Center.objects.all()
     serializer_class = CenterSerializer
+
+
+
+class CenterScopeViewSet(ModelViewSet):
+    """This endpoint Represents the Center Scopes
+
+    It presents the list of Current Center Scopes.
+    """
+    queryset = CenterScope.objects.all()
+    serializer_class = CenterScopeSerializer
+
+
+
+class ScopedCenterViewSet(ModelViewSet):
+    """This endpoint Represents the Centers with definite Scopes
+
+    It presents the list of Current Centers with definite Scopes
+    """
+    queryset = ScopedCenter.objects.all()
+    serializer_class = ScopedCenterSerializer
 
 
 

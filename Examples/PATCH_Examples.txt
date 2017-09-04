@@ -12,6 +12,25 @@
     }
 
 
+/base/center-scopes/1/
+
+    {
+        "id": 1,
+        "gender": "male",
+        "min_age": "13",
+        "max_age": "17"
+    }
+
+
+/base/scoped-centers/1/
+
+    {
+        "id": 1,
+        "center": 1,
+        "center_scope": 1
+    }
+
+
 /base/addresses/1/
 
     {
