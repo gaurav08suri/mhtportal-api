@@ -26,6 +26,7 @@ class EventParticipantViewSet(ModelViewSet):
     It can create/update/retrieve an Event Participant
     It also presents lists of Event Participants
     """
+    permission_classes = (IsAuthenticated,)
     queryset = EventParticipant.objects.all()
     serializer_class = EventParticipantSerializer
 
