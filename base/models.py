@@ -28,7 +28,7 @@ class Center(models.Model):
         convert to lowercase
         """
 
-        self.name = self.name.rstrip(string.whitespace+',').lower()
+        self.name = self.name.rstrip(string.whitespace+',').title()
         super().save(*args, **kwargs)
 
 
