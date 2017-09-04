@@ -10,10 +10,14 @@ events/                                                             ['get' -> li
 
 =====================================================BASE=========================================================
 base/centers/(?P<pk>[0-9]+)/                                        ['get' -> retrieve, 'patch' -> partial update]
+base/center-scopes/(?P<pk>[0-9]+)/                                  ['get' -> retrieve, 'patch' -> partial update]
+base/scoped-centers/(?P<pk>[0-9]+)/                                 ['get' -> retrieve, 'patch' -> partial update]
 base/addresses/(?P<pk>[0-9]+)/                                      ['get' -> retrieve, 'patch' -> partial update]
 base/participants/(?P<pk>[0-9]+)/                                   ['get' -> retrieve, 'patch' -> partial update]
 base/profiles/(?P<pk>[0-9]+)/                                       ['get' -> retrieve, 'patch' -> partial update]
 base/centers/                                                       ['get' -> list, 'patch' -> create]
+base/center-scopes/                                                 ['get' -> list, 'patch' -> create]
+base/scoped-centers/                                                ['get' -> list, 'patch' -> create]
 base/addresses/                                                     ['get' -> list, 'patch' -> create]
 base/participants/                                                  ['get' -> list, 'patch' -> create]
 base/profiles/                                                      ['get' -> list, 'patch' -> create]

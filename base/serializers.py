@@ -1,5 +1,7 @@
 from base.models import (Address,
                         Center,
+                        CenterScope,
+                        ScopedCenter,
                         Participant,
                         Profile)
 from rest_framework.serializers import ModelSerializer
@@ -18,12 +20,34 @@ class CenterSerializer(ModelSerializer):
 
 
 
+class CenterScopeSerializer(ModelSerializer):
+    """CenterScopeSerializer serializes the CenterScope model
+    into json object and vice versa.
+    """
+
+    class Meta:
+        model = CenterScope
+        fields = '__all__'
+
+
+
+class ScopedCenterSerializer(ModelSerializer):
+    """ScopedCenterSerializer serializes the ScopedCenter model
+    into json object and vice versa.
+    """
+
+    class Meta:
+        model = ScopedCenter
+        fields = '__all__'
+
+
+
 class AddressSerializer(ModelSerializer):
     """AddressSerializer serializes the Address model
     into json object and vice versa.
     """
     country = CountryField()
-    
+
     class Meta:
         model = Address
         fields = '__all__'

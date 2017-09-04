@@ -33,6 +33,55 @@ class Center(models.Model):
 
 
 
+# This is really a bad design choice. Need to find a better way to abstract
+# age groups and genders in centers
+class CenterScope(models.Model):
+    """CenterScope defines the scopes of Center
+    """
+
+    # Choices
+    GENDER_FEMALE = 'female'
+    GENDER_MALE = 'male'
+    GENDER_CHOICES = (
+            (GENDER_FEMALE, 'Female'),
+            (GENDER_MALE, 'Male'))
+
+    ONLY_DIGITS_VALIDATOR = RegexValidator(regex=r'^[0-9]*$',
+                                message="Only digits allowed.")
+
+    gender = models.CharField(max_length=6, choices=GENDER_CHOICES,
+                                blank=True)
+    # This represents age-group
+    min_age = models.CharField(max_length=2, validators=[ONLY_DIGITS_VALIDATOR,],
+                                help_text=_("Age Group lower limit"))
+    max_age = models.CharField(max_length=2, validators=[ONLY_DIGITS_VALIDATOR,],
+                                help_text=_("Age Group Upper limit"))
+
+    def __str__(self):
+        str = ("Center Scope: \n"
+                "Age Group: {}-{}\n"
+                "{}")
+        if self.gender:
+                return str.format(self.min_age, self.max_age,
+                                "Gender: {}\n".format(self.gender))
+        return str.format(self.min_age, self.max_age)
+
+
+
+# This is really a bad design choice. Need to find a better way to abstract
+# age groups and genders in centers
+class ScopedCenter(models.Model):
+    """ScopedCenter defines a :model:`Center` with a :model:`CenterScope`
+    """
+
+    center = models.ForeignKey(Center, on_delete=models.CASCADE)
+    center_scope = models.ForeignKey(CenterScope, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "ScopedCenter: \n{}\n{}".format(self.center, self.center_scope)
+
+
+
 class Address(models.Model):
     """Address represents an Event Address
     """
