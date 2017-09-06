@@ -64,7 +64,7 @@ class CenterScope(models.Model):
         if self.gender:
                 return str.format(self.min_age, self.max_age,
                                 "Gender: {}\n".format(self.gender))
-        return str.format(self.min_age, self.max_age)
+        return str.format(self.min_age, self.max_age, '')
 
 
 
