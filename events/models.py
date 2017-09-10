@@ -31,7 +31,7 @@ class Event(models.Model):
     name = models.CharField(max_length=50, help_text=_("Event Name"))
     venue = models.ForeignKey(Address, on_delete=models.CASCADE)
     center = models.ForeignKey(Center, on_delete=models.CASCADE, help_text=_("Center"))
-    year = models.IntegerField(max_length=4, choices=YEAR_CHOICES, default=curr_year,
+    year = models.PositiveIntegerField(choices=YEAR_CHOICES, default=curr_year,
                                 help_text=_('year'))
     start_date = models.DateField(help_text=_("Event Start Date"))
     end_date = models.DateField(help_text=_("Event End Date"))
