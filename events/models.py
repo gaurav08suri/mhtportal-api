@@ -24,10 +24,6 @@ class Event(models.Model):
             (GENDER_FEMALE, 'Female'),
             (GENDER_MALE, 'Male'))
 
-    # Validators
-    ONLY_DIGITS_VALIDATOR = RegexValidator(regex=r'^[0-9]*$',
-                                message="Only digits allowed.")
-
     name = models.CharField(max_length=50, help_text=_("Event Name"))
     venue = models.ForeignKey(Address, on_delete=models.CASCADE)
     center = models.ForeignKey(Center, on_delete=models.CASCADE, help_text=_("Center"))
@@ -44,11 +40,9 @@ class Event(models.Model):
     accommodation_provided = models.BooleanField(help_text=_("Is Accommodation Provided?"))
     event_code = models.CharField(max_length=20, unique=True, help_text=_("Event Code"))
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES, blank=True)
-    # This represents Age group
-    min_age = models.CharField(max_length=2, validators=[ONLY_DIGITS_VALIDATOR,],
-                                help_text=_("Age Group Lower limit"))
-    max_age = models.CharField(max_length=2, validators=[ONLY_DIGITS_VALIDATOR,],
-                                help_text=_("Age Group Upper limit"))
+    # This represents age-group
+    min_age = models.PositiveIntegerField(help_text=_("Age Group lower limit"))
+    max_age = models.PositiveIntegerField(help_text=_("Age Group Upper limit"))
 
     rules = models.TextField(help_text=_("Any Rules"), blank=True)
     remarks = models.TextField(help_text=_("Any Remarks"), blank=True)
