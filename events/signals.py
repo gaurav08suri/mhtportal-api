@@ -4,7 +4,8 @@ from django.db.models.signals import (pre_save,
                                         post_save)
 from django.dispatch import receiver
 from django.conf import settings
-from base.models import Profile
+from base.models import (CenterScope,
+                            Profile)
 from events.models import (Event,
                             EventParticipant)
 from events.tasks import send_sms_async
@@ -75,17 +76,23 @@ def generate_registration_no(sender, instance, **kwargs):
 
 @receiver(post_save, sender=EventParticipant)
 def send_sms(sender, instance, created, **kwargs):
-    if created:
 
+    if created:
         born = instance.participant.date_of_birth
         today = timezone.now().today()
         age = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+        is_lmht_or_bmht = (int(age) <= int(CenterScope.objects.filter(gender='').order_by('max_age').first().max_age))
+        profile_filter = None
+        pm = ''
+
         # Get mobile number of coordinator of the center of the current pariticipant
-        profile_filter = Profile.objects.filter(center=instance.home_center, gender=instance.participant.gender,
-                                                min_age__lte=age, max_age__gte=age)
-        if not profile_filter.exists():
-            pm = ''
+        # Profiles don't have gender for lmht and bmht. i.e. profiles are combined for boys and girls for lmht, bmht.
+        if is_lmht_or_bmht:
+            profile_filter = Profile.objects.filter(center=instance.home_center, min_age__lte=age, max_age__gte=age)
         else:
+            profile_filter = Profile.objects.filter(center=instance.home_center, gender=instance.participant.gender,
+                                                    min_age__lte=age, max_age__gte=age)
+        if profile_filter.exists():
             pm = profile_filter.order_by('id').first().mobile
 
         sms_string = settings.SMS_TEMPLATE.format(instance.registration_no, int(instance.event.fees), pm)
