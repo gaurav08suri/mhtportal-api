@@ -103,3 +103,6 @@ logs/
 # database
 database/
 celerybeat.pid
+
+# CSV Data
+*.csv
