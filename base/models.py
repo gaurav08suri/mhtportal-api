@@ -46,16 +46,11 @@ class CenterScope(models.Model):
             (GENDER_FEMALE, 'Female'),
             (GENDER_MALE, 'Male'))
 
-    ONLY_DIGITS_VALIDATOR = RegexValidator(regex=r'^[0-9]*$',
-                                message="Only digits allowed.")
-
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES,
                                 blank=True)
     # This represents age-group
-    min_age = models.CharField(max_length=2, validators=[ONLY_DIGITS_VALIDATOR,],
-                                help_text=_("Age Group lower limit"))
-    max_age = models.CharField(max_length=2, validators=[ONLY_DIGITS_VALIDATOR,],
-                                help_text=_("Age Group Upper limit"))
+    min_age = models.PositiveIntegerField(help_text=_("Age Group lower limit"))
+    max_age = models.PositiveIntegerField(help_text=_("Age Group Upper limit"))
 
     def __str__(self):
         str = ("Center Scope: \n"
@@ -187,9 +182,6 @@ class Profile(models.Model):
             message="Mobile Number must be entered in the format:\
                     '+999999999999'. Up to 15 digits allowed.")
 
-    ONLY_DIGITS_VALIDATOR = RegexValidator(regex=r'^[0-9]*$',
-                                message="Only digits allowed.")
-
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     center = models.ForeignKey(Center, on_delete=models.CASCADE, blank=True, null=True)
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES,
@@ -197,9 +189,7 @@ class Profile(models.Model):
     mobile = models.CharField(max_length=15, validators=[MOBILE_VALIDATOR,], blank=True,
                             help_text=_("Mobile Number. Add +91 prefix"))
     # This represents age-group
-    min_age = models.CharField(max_length=2, validators=[ONLY_DIGITS_VALIDATOR,],
-                                help_text=_("Age Group lower limit"))
-    max_age = models.CharField(max_length=2, validators=[ONLY_DIGITS_VALIDATOR,],
-                                help_text=_("Age Group Upper limit"))
+    min_age = models.PositiveIntegerField(help_text=_("Age Group lower limit"))
+    max_age = models.PositiveIntegerField(help_text=_("Age Group Upper limit"))
 
 
