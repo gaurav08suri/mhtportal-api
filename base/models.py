@@ -193,7 +193,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     center = models.ForeignKey(Center, on_delete=models.CASCADE, blank=True, null=True)
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES,
-                                default=GENDER_MALE)
+                                default=GENDER_MALE, blank=True)
     mobile = models.CharField(max_length=15, validators=[MOBILE_VALIDATOR,], blank=True,
                             help_text=_("Mobile Number. Add +91 prefix"))
     # This represents age-group
