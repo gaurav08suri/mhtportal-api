@@ -81,7 +81,7 @@ def send_sms(sender, instance, created, **kwargs):
         born = instance.participant.date_of_birth
         today = timezone.now().today()
         age = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
-        is_lmht_or_bmht = (int(age) <= int(CenterScope.objects.filter(gender='').order_by('max_age').first().max_age))
+        is_lmht_or_bmht = (int(age) <= int(CenterScope.objects.filter(gender='').order_by('-max_age').first().max_age))
         profile_filter = None
         pm = ''
 
