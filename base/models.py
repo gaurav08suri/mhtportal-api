@@ -171,8 +171,8 @@ class Profile(models.Model):
     """
 
     # Choices
-    GENDER_FEMALE = 'male'
-    GENDER_MALE = 'female'
+    GENDER_FEMALE = 'female'
+    GENDER_MALE = 'male'
     GENDER_CHOICES = (
             (GENDER_FEMALE, 'Female'),
             (GENDER_MALE, 'Male'))
@@ -184,8 +184,7 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     center = models.ForeignKey(Center, on_delete=models.CASCADE, blank=True, null=True)
-    gender = models.CharField(max_length=6, choices=GENDER_CHOICES,
-                                default=GENDER_MALE, blank=True)
+    gender = models.CharField(max_length=6, choices=GENDER_CHOICES, blank=True)
     mobile = models.CharField(max_length=15, validators=[MOBILE_VALIDATOR,], blank=True,
                             help_text=_("Mobile Number. Add +91 prefix"))
     # This represents age-group
