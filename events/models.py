@@ -84,6 +84,8 @@ class EventParticipant(models.Model):
     goal_achievement = models.CharField(max_length=100, help_text=_("Goal Achievement"), blank=True)
     role = models.CharField(max_length=12, choices=ROLE_CHOICES, help_text=_("Role"))
     registration_status = models.PositiveSmallIntegerField(default=0, help_text=_("Registration Status"))
+    created_on = models.DateTimeField(auto_now_add=True, help_text=_("Event Participant Created on"))
+    updated_on = models.DateTimeField(auto_now=True, help_text=_("Event Participant Updated on"))
 
 
 
