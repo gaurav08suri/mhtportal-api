@@ -86,6 +86,7 @@ class EventParticipant(models.Model):
     registration_status = models.PositiveSmallIntegerField(default=0, help_text=_("Registration Status"))
     created_on = models.DateTimeField(auto_now_add=True, help_text=_("Event Participant Created on"))
     updated_on = models.DateTimeField(auto_now=True, help_text=_("Event Participant Updated on"))
+    skill = models.TextField(blank=True, help_text=_("Skill"))
 
 
 
