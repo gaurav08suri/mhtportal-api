@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_celery_beat',
     'django_celery_results',
+    'django_extensions',
 
     # in-house apps
     'base.apps.BaseConfig',
@@ -267,4 +268,9 @@ LOGGING = {
             'propagate': True,
         },
     }
+}
+
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
 }
