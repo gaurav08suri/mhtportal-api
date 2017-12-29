@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
+from url_filter.integrations.drf import DjangoFilterBackend
 from base.models import (Center,
                         CenterScope,
                         ScopedCenter,
@@ -60,6 +61,8 @@ class CenterViewSet(ModelViewSet):
     """
     queryset = Center.objects.all()
     serializer_class = CenterSerializer
+    filter_backends = [DjangoFilterBackend]
+    filter_fields = ['id', 'name', 'parent', 'is_displayed']
 
 
 
@@ -90,6 +93,8 @@ class AddressViewSet(ModelViewSet):
     """
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
+    filter_backends = [DjangoFilterBackend]
+    filter_fields = ['id', 'city', 'state', 'country', 'zip_code']
 
 
 
@@ -102,6 +107,9 @@ class ParticipantViewSet(ModelViewSet):
     permission_classes = (IsAuthenticated,)
     queryset = Participant.objects.all()
     serializer_class = ParticipantSerializer
+    filter_backends = [DjangoFilterBackend]
+    filter_fields = ['id', 'first_name', 'last_name', 'date_of_birth' 'gender', 
+    'center', 'other_center', 'email']
 
 
 
@@ -115,6 +123,7 @@ class ProfileViewSet(ModelViewSet):
 
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-
+    filter_backends = [DjangoFilterBackend]
+    filter_fields = ['id', 'user', 'center', 'gender', 'min_age', 'max_age']
 
 

@@ -39,3 +39,4 @@ uritemplate==3.0.0
 urllib3==1.21.1
 vine==1.1.4
 wrapt==1.10.10
+django-url-filter==0.3.4
