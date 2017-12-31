@@ -46,6 +46,7 @@ class Event(models.Model):
 
     rules = models.TextField(help_text=_("Any Rules"), blank=True)
     remarks = models.TextField(help_text=_("Any Remarks"), blank=True)
+    active = models.BooleanField(help_text=_("Is event active?"))
 
 
 
