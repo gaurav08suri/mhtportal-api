@@ -1,6 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from url_filter.integrations.drf import DjangoFilterBackend
 from events.models import (Event,
                             EventParticipant)
 from events.serializers import (EventSerializer,
@@ -18,7 +17,6 @@ class EventViewSet(ModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-    filter_backends = [DjangoFilterBackend]
     filter_fields = ['id', 'name', 'center', 'year', 'event_code', 'gender', 'min_age', 'max_age', 'active']
 
 
@@ -32,7 +30,6 @@ class EventParticipantViewSet(ModelViewSet):
     permission_classes = (IsAuthenticatedOrPostOnly,)
     queryset = EventParticipant.objects.all()
     serializer_class = EventParticipantSerializer
-    filter_backends = [DjangoFilterBackend]
     filter_fields = ['id', 'event', 'participant', 'registration_no', 'home_center', 'event_center', 'accommodation',
      'payment_status', 'cashier', 'big_buddy', 'role', 'registration_status', 'created_on', 'updated_on']
 
