@@ -38,7 +38,7 @@ class Event(models.Model):
     late_fees = models.DecimalField(max_digits=10, decimal_places=2,
                                 help_text=_("Late Registration Fees"))
     accommodation_provided = models.BooleanField(help_text=_("Is Accommodation Provided?"))
-    event_code = models.CharField(max_length=20, unique=True, help_text=_("Event Code"))
+    event_code = models.CharField(max_length=100, unique=True, help_text=_("Event Code"))
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES, blank=True)
     # This represents age-group
     min_age = models.PositiveIntegerField(help_text=_("Age Group lower limit"))
@@ -72,7 +72,7 @@ class EventParticipant(models.Model):
 
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
-    registration_no = models.CharField(max_length=20, unique=True, help_text=_("Registration Number"))
+    registration_no = models.CharField(max_length=100, unique=True, help_text=_("Registration Number"))
     home_center = models.ForeignKey(Center, on_delete=models.CASCADE, related_name='home_center',
                                     help_text=_("Home Center"))
     event_center = models.ForeignKey(Center, on_delete=models.CASCADE, blank=True, null=True,
