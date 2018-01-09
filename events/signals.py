@@ -1,4 +1,5 @@
 import re
+import logging
 from django.utils import timezone
 from django.db.models.signals import (pre_save,
                                         post_save)
@@ -10,7 +11,7 @@ from events.models import (Event,
                             EventParticipant)
 from events.tasks import send_sms_async
 
-
+logger = logging.getLogger(__name__)
 
 @receiver(pre_save, sender=Event)
 def generate_event_code(sender, instance, **kwargs):
