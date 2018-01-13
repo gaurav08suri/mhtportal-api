@@ -104,10 +104,9 @@ def send_sms(sender, instance, created, **kwargs):
         mobile = str(instance.participant.mobile)
         if ('+' in mobile) or ('91' in mobile[0:3]):
             mobile = mobile[3:]
-        url = settings.SMS_URL.format(settings.SMS_USER, settings.SMS_PASS, settings.SENDER_ID, mobile, sms_string)
         try:
             # pass
-            send_sms_async.delay(url)
+            send_sms_async.delay('POST', params={'to': [mobile], 'message': sms_string})
 
         except Exception as e:
             logger.exception('while sending sms')

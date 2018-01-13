@@ -164,10 +164,14 @@ SMS_TEMPLATE = ('Step 1 of your registration is complete. To confirm your '
                 'registration please pay Rs {1} at your local center. '
                 'Registration No: {0}, Contact: {2} '
                 )
-SMS_URL = config('SMS_URL')
+SMS_SENDER_ID = config('SENDER_ID')
+SMS_AUTH = config('SMS_AUTH')
+SMS_URL_GET = config('SMS_URL_GET')
+SMS_URL_POST = config('SMS_URL_POST')
 SMS_USER = config('SMS_USER')
 SMS_PASS = config('SMS_PASS')
-SENDER_ID = config('SENDER_ID')
+SMS_ROUTE = config('SMS_ROUTE')
+SMS_COUNTRY= "91"
 
 # Logging
 LOG_DIR = os.path.join(BASE_DIR, 'logs')
