@@ -85,14 +85,22 @@ def send_sms(sender, instance, created, **kwargs):
         is_lmht_or_bmht = (int(age) <= int(CenterScope.objects.filter(gender='').order_by('-max_age').first().max_age))
         profile_filter = None
         pm = ''
+        gender = ''
 
         # Get mobile number of coordinator of the center of the current pariticipant
         # Profiles don't have gender for lmht and bmht. i.e. profiles are combined for boys and girls for lmht, bmht.
-        if is_lmht_or_bmht:
-            profile_filter = Profile.objects.filter(center=instance.home_center, min_age__lte=age, max_age__gte=age)
-        else:
-            profile_filter = Profile.objects.filter(center=instance.home_center, gender=instance.participant.gender,
+        if not is_lmht_or_bmht:
+            gender = instance.participant.gender
+
+        profile_filter = Profile.objects.filter(center=instance.home_center, gender=gender,
                                                     min_age__lte=age, max_age__gte=age)
+
+        # if age of participant is greater than any of the profiles, send the mobile no. of the profile of
+        # the current event
+        if not profile_filter.exists():
+            profile_filter = Profile.objects.filter(center=instance.home_center, gender=gender,
+            min_age=instance.event.min_age, max_age=instance.event.max_age)
+
         if profile_filter.exists():
             pm = profile_filter.order_by('id').first().mobile
 
