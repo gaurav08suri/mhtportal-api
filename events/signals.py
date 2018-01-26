@@ -16,6 +16,11 @@ logger = logging.getLogger(__name__)
 @receiver(pre_save, sender=Event)
 def generate_event_code(sender, instance, **kwargs):
 
+    # no need to create if already there. I know there's a better way to
+    # achieve this.
+    if instance.event_code:
+        return
+
     l = len(instance.name)
     s = ''
     y = instance.year
