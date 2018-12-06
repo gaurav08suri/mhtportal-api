@@ -168,6 +168,8 @@ SMS_URL = config('SMS_URL')
 SMS_USER = config('SMS_USER')
 SMS_PASS = config('SMS_PASS')
 SENDER_ID = config('SENDER_ID')
+SMS_AUTH = config('SMS_AUTH')
+SMS_ROUTE= config('SMS_ROUTE')
 
 # Logging
 LOG_DIR = os.path.join(BASE_DIR, 'logs')
