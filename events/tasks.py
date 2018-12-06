@@ -9,10 +9,11 @@ logger = logging.getLogger(__name__)
 
 
 @shared_task
-def send_sms_async(url, params=None):
+def send_sms_async(url, headers=None, params=None):
     try:
         if params:
-            requests.post(url, data=params)
+            requests.post(url, headers=headers, data=params)
+            #requests.post(url, data=params)
         else:
             requests.get(url)
     except requests.RequestException as e:
