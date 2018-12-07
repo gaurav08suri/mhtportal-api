@@ -128,6 +128,7 @@ def send_sms(sender, instance, created, **kwargs):
         data['country'] = settings.SMS_COUNTRY
         data['route'] = settings.SMS_ROUTE
         data['sms'] = [{'to': mobile, 'message': sms_string}]
+        logger.info("Created SMS string {}".format(json.dumps(data)))
         try:
             # pass
             send_sms_async.delay(settings.SMS_URL, headers, json.dumps(data))
