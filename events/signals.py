@@ -119,19 +119,11 @@ def send_sms(sender, instance, created, **kwargs):
         if ('+' in mobile) or ('91' in mobile[0:3]):
             mobile = mobile[3:]
         #url = settings.SMS_URL.format(settings.SMS_USER, settings.SMS_PASS, settings.SENDER_ID, mobile, sms_string)
-        data = {}
-        headers = {}
-        headers['authkey'] = settings.SMS_AUTH
-        headers['Content-type'] = 'application/json'
-        headers['Accept'] = 'text/plain'
-        data['sender'] = settings.SENDER_ID
-        data['country'] = settings.SMS_COUNTRY
-        data['route'] = settings.SMS_ROUTE
-        data['sms'] = [{'to': mobile, 'message': sms_string}]
-        logger.info("Created SMS string {}".format(json.dumps(data)))
+
+        logger.info("Created SMS string {}".format(sms_string))
         try:
             # pass
-            send_sms_async.delay(settings.SMS_URL, headers, json.dumps(data))
+            send_sms_async.delay('POST', params={'to': [mobile], 'message': sms_string})
 
         except Exception as e:
             logger.exception('while sending sms')
