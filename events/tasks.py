@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 def send_sms_async(url, headers=None, params=None):
     try:
         if params:
+            logger.info("In tasks, {}".format(url))
             requests.post(url, headers=headers, data=params)
             #requests.post(url, data=params)
         else:
