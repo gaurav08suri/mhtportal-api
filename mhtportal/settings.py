@@ -169,7 +169,7 @@ NEW_SMS_TEMPLATE = ('''Your registration is complete.
 Registration No: {0},
 Fees Rs. {1} to be paid at registration counter before event. 
 Workshop Date: {3},
-Address: {4}
+{4}
 Contact: {2}''')
 
 SMS_URL = config('SMS_URL')
