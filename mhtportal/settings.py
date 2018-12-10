@@ -164,6 +164,14 @@ SMS_TEMPLATE = ('Step 1 of your registration is complete. To confirm your '
                 'registration please pay Rs {1} at your local center. '
                 'Registration No: {0}, Contact: {2} '
                 )
+
+NEW_SMS_TEMPLATE = ('''Your registration is complete.
+Registration No: {0},
+Fees Rs. {1} to be paid at registration counter before event. 
+Workshop Date: {3},
+Address: {4}
+Contact: {2}''')
+
 SMS_URL = config('SMS_URL')
 SMS_USER = config('SMS_USER')
 SMS_PASS = config('SMS_PASS')

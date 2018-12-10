@@ -110,7 +110,7 @@ def send_sms(sender, instance, created, **kwargs):
         if profile_filter.exists():
             pm = profile_filter.order_by('id').first().mobile
 
-        sms_string = settings.SMS_TEMPLATE.format(instance.registration_no, int(instance.event.fees), pm)
+        sms_string = settings.NEW_SMS_TEMPLATE.format(instance.registration_no, int(instance.event.fees), pm, instance.event.start_date, instance.event.venue)
 
         # Because the sms vendor auto adds 91 to the number, we'll have to remove ours
         # Note: This is a hack and only works for India numbers. Please don't use this in
