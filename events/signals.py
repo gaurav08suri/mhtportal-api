@@ -81,7 +81,7 @@ def generate_registration_no(sender, instance, **kwargs):
 
 
 
-#@receiver(post_save, sender=EventParticipant)
+@receiver(post_save, sender=EventParticipant)
 def send_sms(sender, instance, created, **kwargs):
 
     if created:
