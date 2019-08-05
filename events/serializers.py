@@ -2,10 +2,11 @@ import logging
 from django.core.exceptions import MultipleObjectsReturned
 from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import ModelSerializer
-from events.models import (Event, EventParticipant)
+from events.models import (Event, EventParticipant, EventCategory)
 from base.models import (Participant, Address)
 from base.serializers import (ParticipantSerializer,
                                 AddressSerializer)
+
 
 
 logger = logging.getLogger(__name__)
@@ -62,6 +63,18 @@ class EventSerializer(ModelSerializer):
 
 
 
+class EventCategorySerializer(ModelSerializer):
+    """CenterSerializer serializes the Center model
+    into json object and vice versa.
+    """
+
+    class Meta:
+        model = EventCategory
+        fields = '__all__'
+
+
+
+
 class EventParticipantSerializer(ModelSerializer):
     """EventParticipantSerializer serializes EventPariticpant model
     to json object and vice versa.
@@ -76,6 +89,7 @@ class EventParticipantSerializer(ModelSerializer):
 
     def create(self, validated_data):
         # event_data = validated_data.pop('event')
+        print(validated_data)
         participant_data = validated_data.pop('participant')
 
         # only create if not already there

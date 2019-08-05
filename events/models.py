@@ -4,6 +4,12 @@ from django.utils.translation import ugettext as _
 from django.core.validators import RegexValidator
 from base.models import (Address, Center, Participant)
 
+class EventCategory(models.Model):
+    category = models.CharField(max_length=50, default="", help_text=_("Event Category"))
+
+    def __str__(self):
+        return "Event Category: {}".format(self.category)
+
 
 
 class Event(models.Model):
@@ -27,6 +33,7 @@ class Event(models.Model):
     name = models.CharField(max_length=50, help_text=_("Event Name"))
     venue = models.ForeignKey(Address, on_delete=models.CASCADE)
     center = models.ForeignKey(Center, on_delete=models.CASCADE, help_text=_("Center"))
+    category = models.ForeignKey(EventCategory, on_delete=models.CASCADE, help_text=_("Event Category"), default="")
     year = models.PositiveIntegerField(choices=YEAR_CHOICES, default=curr_year,
                                 help_text=_('year'))
     start_date = models.DateField(help_text=_("Event Start Date"))
@@ -88,6 +95,5 @@ class EventParticipant(models.Model):
     created_on = models.DateTimeField(auto_now_add=True, help_text=_("Event Participant Created on"))
     updated_on = models.DateTimeField(auto_now=True, help_text=_("Event Participant Updated on"))
     skill = models.TextField(blank=True, help_text=_("Skill"))
-
 
 

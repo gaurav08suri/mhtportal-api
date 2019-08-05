@@ -1,9 +1,9 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from events.models import (Event,
-                            EventParticipant)
+                            EventParticipant, EventCategory)
 from events.serializers import (EventSerializer,
-                                EventParticipantSerializer)
+                                EventParticipantSerializer,EventCategorySerializer)
 from events.permissions import IsAuthenticatedOrPostOnly
 
 
@@ -17,7 +17,19 @@ class EventViewSet(ModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-    filter_fields = ['id', 'name', 'center', 'year', 'event_code', 'gender', 'min_age', 'max_age', 'active']
+    filter_fields = ['id', 'name', 'center', 'year', 'event_code', 'gender', 'min_age', 'max_age', 'active', 'category']
+
+
+
+class EventCategoryViewSet(ModelViewSet):
+    """This endpoint Represents the Centers
+
+    It presents the list of Current Centers.
+    """
+    queryset = EventCategory.objects.all()
+    serializer_class = EventCategorySerializer
+    filter_fields = ['id', 'category']
+
 
 
 
