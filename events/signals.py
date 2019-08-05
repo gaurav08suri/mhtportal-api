@@ -110,6 +110,9 @@ def send_sms(sender, instance, created, **kwargs):
         if profile_filter.exists():
             pm = profile_filter.order_by('id').first().mobile
 
+        if instance.event.id == 84:
+            pm = "8200312214"
+
         sms_string = settings.SMS_TEMPLATE.format(instance.registration_no, int(instance.event.fees), pm)
 
         # Because the sms vendor auto adds 91 to the number, we'll have to remove ours
