@@ -9,17 +9,10 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0013_auto_20190709_1635'),
+        ('events', '0014_auto_20190709_1731'),
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='EventCategory',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('category', models.CharField(default='', editable=False, help_text='Event Category', max_length=50)),
-            ],
-        ),
         migrations.AddField(
             model_name='event',
             name='category',
