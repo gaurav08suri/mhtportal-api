@@ -89,7 +89,6 @@ class EventParticipantSerializer(ModelSerializer):
 
     def create(self, validated_data):
         # event_data = validated_data.pop('event')
-        print(validated_data)
         participant_data = validated_data.pop('participant')
 
         # only create if not already there

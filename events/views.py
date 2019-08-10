@@ -22,9 +22,9 @@ class EventViewSet(ModelViewSet):
 
 
 class EventCategoryViewSet(ModelViewSet):
-    """This endpoint Represents the Centers
+    """This endpoint Represents the Event Category
 
-    It presents the list of Current Centers.
+    It presents the list of all the event catgories.
     """
     queryset = EventCategory.objects.all()
     serializer_class = EventCategorySerializer
