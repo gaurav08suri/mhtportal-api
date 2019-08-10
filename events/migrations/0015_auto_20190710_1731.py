@@ -16,6 +16,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='event',
             name='category',
-            field=models.ForeignKey(default='', editable=False, help_text='Event Category', on_delete=django.db.models.deletion.CASCADE, to='events.EventCategory'),
+            field=models.ForeignKey(default=1, editable=False, help_text='Event Category', on_delete=django.db.models.deletion.CASCADE, to='events.EventCategory'),
         ),
     ]
