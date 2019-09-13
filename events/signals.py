@@ -367,7 +367,8 @@ def send_sms(sender, instance, created, **kwargs):
         
         if instance.event.id == 85:
             pms = [cep["mobile"] for cep in center_event_poc if cep["center_id"] == instance.home_center]
-            pm = pms[0] if len(pms) > 0
+            if len(pms) > 0:
+                pm = pms[0] 
         # contacts_json.
 
         sms_string = settings.SMS_TEMPLATE.format(instance.registration_no, int(instance.event.fees), pm)
