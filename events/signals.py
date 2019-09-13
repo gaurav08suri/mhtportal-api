@@ -15,8 +15,7 @@ import json
 
 logger = logging.getLogger(__name__)
 
-center_event_poc = 
-[
+center_event_poc = [
   {
     "center_id": 4,
     "mobile": 9998992900
