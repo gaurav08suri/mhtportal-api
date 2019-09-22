@@ -3,267 +3,267 @@ import logging
 import json
 from django.utils import timezone
 from django.db.models.signals import (pre_save,
-                                        post_save)
+                                      post_save)
 from django.dispatch import receiver
 from django.conf import settings
 from base.models import (CenterScope,
-                            Profile)
+                         Profile)
 from events.models import (Event,
-                            EventParticipant)
+                           EventParticipant)
 from events.tasks import send_sms_async
 import json
 
 logger = logging.getLogger(__name__)
 
 center_event_poc = [
-  {
-    "center_id": 4,
-    "mobile": 9998992900
-  },
-  {
-    "center_id": 5,
-    "mobile": 9904312880
-  },
-  {
-    "center_id": 44,
-    "mobile": 9327072945
-  },
-  {
-    "center_id": 63,
-    "mobile": 9327072945
-  },
-  {
-    "center_id": 39,
-    "mobile": 9824090958
-  },
-  {
-    "center_id": 64,
-    "mobile": 9327081075
-  },
-  {
-    "center_id": 70,
-    "mobile": 9509300679
-  },
-  {
-    "center_id": 68,
-    "mobile": 7698025206
-  },
-  {
-    "center_id": 6,
-    "mobile": 9898026589
-  },
-  {
-    "center_id": 7,
-    "mobile": 9537977231
-  },
-  {
-    "center_id": 71,
-    "mobile": 8087137057
-  },
-  {
-    "center_id": 72,
-    "mobile": 9314209457
-  },
-  {
-    "center_id": 8,
-    "mobile": 9974299193
-  },
-  {
-    "center_id": 9,
-    "mobile": 9879822077
-  },
-  {
-    "center_id": 10,
-    "mobile": 7359553949
-  },
-  {
-    "center_id": 73,
-    "mobile": 9722324333
-  },
-  {
-    "center_id": 57,
-    "mobile": 9428904747
-  },
-  {
-    "center_id": 75,
-    "mobile": 9574046081
-  },
-  {
-    "center_id": 11,
-    "mobile": 9825795751
-  },
-  {
-    "center_id": 65,
-    "mobile": 6353468031
-  },
-  {
-    "center_id": 77,
-    "mobile": 9205727818
-  },
-  {
-    "center_id": 12,
-    "mobile": 9979109529
-  },
-  {
-    "center_id": 52,
-    "mobile": "9904551649 / 7383818547"
-  },
-  {
-    "center_id": 62,
-    "mobile": 9926910037
-  },
-  {
-    "center_id": 78,
-    "mobile": 7737806148
-  },
-  {
-    "center_id": 13,
-    "mobile": "9428315109 / 9998460880"
-  },
-  {
-    "center_id": 53,
-    "mobile": 9898024036
-  },
-  {
-    "center_id": 14,
-    "mobile": 9726754571
-  },
-  {
-    "center_id": 66,
-    "mobile": 8401389698
-  },
-  {
-    "center_id": 15,
-    "mobile": 9925678854
-  },
-  {
-    "center_id": 16,
-    "mobile": 8160590472
-  },
-  {
-    "center_id": 17,
-    "mobile": 9323263232
-  },
-  {
-    "center_id": 18,
-    "mobile": 9320819111
-  },
-  {
-    "center_id": 19,
-    "mobile": 9820597129
-  },
-  {
-    "center_id": 20,
-    "mobile": 7738044390
-  },
-  {
-    "center_id": 21,
-    "mobile": 9860708203
-  },
-  {
-    "center_id": 22,
-    "mobile": 9657003381
-  },
-  {
-    "center_id": 79,
-    "mobile": 9594982002
-  },
-  {
-    "center_id": 80,
-    "mobile": 9323263232
-  },
-  {
-    "center_id": 23,
-    "mobile": 8866100217
-  },
-  {
-    "center_id": 24,
-    "mobile": 9429290795
-  },
-  {
-    "center_id": 81,
-    "mobile": 9413172239
-  },
-  {
-    "center_id": 82,
-    "mobile": 8200041637
-  },
-  {
-    "center_id": 25,
-    "mobile": 9033494114
-  },
-  {
-    "center_id": 27,
-    "mobile": "9825317607 / 8320296050"
-  },
-  {
-    "center_id": 28,
-    "mobile": "9825317607 / 8320296050"
-  },
-  {
-    "center_id": 26,
-    "mobile": "9825317607 / 8320296050"
-  },
-  {
-    "center_id": 83,
-    "mobile": 9824164941
-  },
-  {
-    "center_id": 50,
-    "mobile": 9974146715
-  },
-  {
-    "center_id": 51,
-    "mobile": 9924351117
-  },
-  {
-    "center_id": 29,
-    "mobile": 9898689697
-  },
-  {
-    "center_id": 85,
-    "mobile": 7359988465
-  },
-  {
-    "center_id": 84,
-    "mobile": 8758343332
-  },
-  {
-    "center_id": 31,
-    "mobile": 9904401775
-  },
-  {
-    "center_id": 86,
-    "mobile": 9898689697
-  },
-  {
-    "center_id": 87,
-    "mobile": 9537371313
-  },
-  {
-    "center_id": 32,
-    "mobile": 9998177813
-  },
-  {
-    "center_id": 33,
-    "mobile": 9825503819
-  },
-  {
-    "center_id": 34,
-    "mobile": 7405875164
-  },
-  {
-    "center_id": 88,
-    "mobile": "9427492610 / 7990098414"
-  },
-  {
-    "center_id": 35,
-    "mobile": 8200758658
-  },
-  {
-    "center_id": 36,
-    "mobile": "9924347260"
-  }
+    {
+        "center_id": 4,
+        "mobile": 9998992900
+    },
+    {
+        "center_id": 5,
+        "mobile": 9904312880
+    },
+    {
+        "center_id": 44,
+        "mobile": 9327072945
+    },
+    {
+        "center_id": 63,
+        "mobile": 9327072945
+    },
+    {
+        "center_id": 39,
+        "mobile": 9824090958
+    },
+    {
+        "center_id": 64,
+        "mobile": 9327081075
+    },
+    {
+        "center_id": 70,
+        "mobile": 9509300679
+    },
+    {
+        "center_id": 68,
+        "mobile": 7698025206
+    },
+    {
+        "center_id": 6,
+        "mobile": 9898026589
+    },
+    {
+        "center_id": 7,
+        "mobile": 9537977231
+    },
+    {
+        "center_id": 71,
+        "mobile": 8087137057
+    },
+    {
+        "center_id": 72,
+        "mobile": 9314209457
+    },
+    {
+        "center_id": 8,
+        "mobile": 9974299193
+    },
+    {
+        "center_id": 9,
+        "mobile": "9879822077"
+    },
+    {
+        "center_id": 10,
+        "mobile": "7359553949"
+    },
+    {
+        "center_id": 73,
+        "mobile": "9722324333"
+    },
+    {
+        "center_id": 57,
+        "mobile": "9428904747"
+    },
+    {
+        "center_id": 75,
+        "mobile": "9574046081"
+    },
+    {
+        "center_id": 11,
+        "mobile": "9825795751"
+    },
+    {
+        "center_id": 65,
+        "mobile": "6353468031"
+    },
+    {
+        "center_id": 77,
+        "mobile": "9205727818"
+    },
+    {
+        "center_id": 12,
+        "mobile": "9979109529"
+    },
+    {
+        "center_id": 52,
+        "mobile": "9904551649 / 7383818547"
+    },
+    {
+        "center_id": 62,
+        "mobile": "9926910037"
+    },
+    {
+        "center_id": 78,
+        "mobile": "7737806148"
+    },
+    {
+        "center_id": 13,
+        "mobile": "9428315109"
+    },
+    {
+        "center_id": 53,
+        "mobile": "7016861275"
+    },
+    {
+        "center_id": 14,
+        "mobile": "7984056061"
+    },
+    {
+        "center_id": 66,
+        "mobile": 8401389698
+    },
+    {
+        "center_id": 15,
+        "mobile": 9925678854
+    },
+    {
+        "center_id": 16,
+        "mobile": 8160590472
+    },
+    {
+        "center_id": 17,
+        "mobile": 9323263232
+    },
+    {
+        "center_id": 18,
+        "mobile": 9320819111
+    },
+    {
+        "center_id": 19,
+        "mobile": 9820597129
+    },
+    {
+        "center_id": 20,
+        "mobile": 7738044390
+    },
+    {
+        "center_id": 21,
+        "mobile": 9860708203
+    },
+    {
+        "center_id": 22,
+        "mobile": 9657003381
+    },
+    {
+        "center_id": 79,
+        "mobile": 9594982002
+    },
+    {
+        "center_id": 80,
+        "mobile": 9323263232
+    },
+    {
+        "center_id": 23,
+        "mobile": 8866100217
+    },
+    {
+        "center_id": 24,
+        "mobile": 9429290795
+    },
+    {
+        "center_id": 81,
+        "mobile": 9413172239
+    },
+    {
+        "center_id": 82,
+        "mobile": 8200041637
+    },
+    {
+        "center_id": 25,
+        "mobile": 9033494114
+    },
+    {
+        "center_id": 27,
+        "mobile": "8238990150"
+    },
+    {
+        "center_id": 28,
+        "mobile": "9726272267"
+    },
+    {
+        "center_id": 26,
+        "mobile": "9726272267"
+    },
+    {
+        "center_id": 83,
+        "mobile": "9824164941"
+    },
+    {
+        "center_id": 50,
+        "mobile": "9601301918"
+    },
+    {
+        "center_id": 51,
+        "mobile": 9924351117
+    },
+    {
+        "center_id": 29,
+        "mobile": 9898689697
+    },
+    {
+        "center_id": 85,
+        "mobile": 7359988465
+    },
+    {
+        "center_id": 84,
+        "mobile": 8758343332
+    },
+    {
+        "center_id": 31,
+        "mobile": 9904401775
+    },
+    {
+        "center_id": 86,
+        "mobile": 9898689697
+    },
+    {
+        "center_id": 87,
+        "mobile": 9537371313
+    },
+    {
+        "center_id": 32,
+        "mobile": 9998177813
+    },
+    {
+        "center_id": 33,
+        "mobile": 9825503819
+    },
+    {
+        "center_id": 34,
+        "mobile": 7405875164
+    },
+    {
+        "center_id": 88,
+        "mobile": "9427492610 / 7990098414"
+    },
+    {
+        "center_id": 35,
+        "mobile": 8200758658
+    },
+    {
+        "center_id": 36,
+        "mobile": "9924347260"
+    }
 ]
 
 @receiver(pre_save, sender=Event)
@@ -308,7 +308,6 @@ def generate_event_code(sender, instance, **kwargs):
         instance.event_code = fs
 
 
-
 @receiver(pre_save, sender=EventParticipant)
 def generate_registration_no(sender, instance, **kwargs):
 
@@ -323,14 +322,13 @@ def generate_registration_no(sender, instance, **kwargs):
     else:
         ec += '-F-'
     last_registered = EventParticipant.objects.filter(event=instance.event,
-                        participant__gender=instance.participant.gender).order_by('id').last()
+                                                      participant__gender=instance.participant.gender).order_by('id').last()
 
     if last_registered:
         total_registered = int(last_registered.registration_no.split('-')[-1])
         instance.registration_no = ec + '{}'.format(total_registered+1)
     else:
         instance.registration_no = ec + '1'
-
 
 
 @receiver(post_save, sender=EventParticipant)
@@ -351,24 +349,24 @@ def send_sms(sender, instance, created, **kwargs):
             gender = instance.participant.gender
 
         profile_filter = Profile.objects.filter(center=instance.home_center, gender=gender,
-                                                    min_age__lte=age, max_age__gte=age)
+                                                min_age__lte=age, max_age__gte=age)
 
         # if age of participant is greater than any of the profiles, send the mobile no. of the profile of
         # the current event
         if not profile_filter.exists():
             profile_filter = Profile.objects.filter(center=instance.home_center, gender=gender,
-            min_age=instance.event.min_age, max_age=instance.event.max_age)
+                                                    min_age=instance.event.min_age, max_age=instance.event.max_age)
 
         if profile_filter.exists():
             pm = profile_filter.order_by('id').first().mobile
 
         if instance.event.id == 84:
             pm = "8200312214"
-        
+
         if instance.event.id == 85:
             pms = [cep["mobile"] for cep in center_event_poc if cep["center_id"] == instance.home_center]
             if len(pms) > 0:
-                pm = pms[0] 
+                pm = pms[0]
         # contacts_json.
 
         sms_string = settings.SMS_TEMPLATE.format(instance.registration_no, int(instance.event.fees), pm)
@@ -388,5 +386,3 @@ def send_sms(sender, instance, created, **kwargs):
 
         except Exception as e:
             logger.exception('while sending sms')
-
-
