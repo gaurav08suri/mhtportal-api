@@ -3,13 +3,13 @@ import logging
 import json
 from django.utils import timezone
 from django.db.models.signals import (pre_save,
-                                        post_save)
+                                      post_save)
 from django.dispatch import receiver
 from django.conf import settings
 from base.models import (CenterScope,
-                            Profile)
+                         Profile)
 from events.models import (Event,
-                            EventParticipant)
+                           EventParticipant)
 from events.tasks import send_sms_async
 import json
 
@@ -316,7 +316,6 @@ def generate_event_code(sender, instance, **kwargs):
         instance.event_code = fs
 
 
-
 @receiver(pre_save, sender=EventParticipant)
 def generate_registration_no(sender, instance, **kwargs):
 
@@ -331,14 +330,13 @@ def generate_registration_no(sender, instance, **kwargs):
     else:
         ec += '-F-'
     last_registered = EventParticipant.objects.filter(event=instance.event,
-                        participant__gender=instance.participant.gender).order_by('id').last()
+                                                      participant__gender=instance.participant.gender).order_by('id').last()
 
     if last_registered:
         total_registered = int(last_registered.registration_no.split('-')[-1])
         instance.registration_no = ec + '{}'.format(total_registered+1)
     else:
         instance.registration_no = ec + '1'
-
 
 
 @receiver(post_save, sender=EventParticipant)
@@ -359,25 +357,25 @@ def send_sms(sender, instance, created, **kwargs):
             gender = instance.participant.gender
 
         profile_filter = Profile.objects.filter(center=instance.home_center, gender=gender,
-                                                    min_age__lte=age, max_age__gte=age)
+                                                min_age__lte=age, max_age__gte=age)
 
         # if age of participant is greater than any of the profiles, send the mobile no. of the profile of
         # the current event
         if not profile_filter.exists():
             profile_filter = Profile.objects.filter(center=instance.home_center, gender=gender,
-            min_age=instance.event.min_age, max_age=instance.event.max_age)
+                                                    min_age=instance.event.min_age, max_age=instance.event.max_age)
 
         if profile_filter.exists():
             pm = profile_filter.order_by('id').first().mobile
 
         if instance.event.id == 84:
             pm = "8200312214"
-        
+
         if instance.event.id == 85:
             logger.info(instance.home_center)
             pms = [cep["mobile"] for cep in center_event_poc if cep["center_id"] == instance.home_center.id]
             if len(pms) > 0:
-                pm = pms[0] 
+                pm = pms[0]
         # contacts_json.
 
         sms_string = settings.SMS_TEMPLATE.format(instance.registration_no, int(instance.event.fees), pm)
@@ -397,5 +395,3 @@ def send_sms(sender, instance, created, **kwargs):
 
         except Exception as e:
             logger.exception('while sending sms')
-
-
