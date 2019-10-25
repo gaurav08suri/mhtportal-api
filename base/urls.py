@@ -6,7 +6,9 @@ from base.views import (CenterViewSet,
                         ScopedCenterViewSet,
                         AddressViewSet,
                         ParticipantViewSet,
-                        ProfileViewSet)
+                        ProfileViewSet,
+                        CountriesView,
+                        StatesView)
 
 api_endpoints_retrieve_update = {
     'get': 'retrieve',
@@ -56,6 +58,9 @@ urlpatterns = [
 
     url(r'^profiles/$', ProfileViewSet.as_view(api_endpoints_list_create),
         name='profiles-list-create'),
+
+    url(r'^countries/$', CountriesView.as_view()),
+    url(r'^states/$', StatesView.as_view())
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

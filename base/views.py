@@ -1,4 +1,7 @@
 from django.shortcuts import get_object_or_404
+from django_countries import countries
+from localflavor.in_.in_states import STATE_CHOICES
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -51,7 +54,15 @@ class MeView(APIView):
         ps = ProfileSerializer(profile)
         return Response(ps.data)
 
+class CountriesView(APIView):
 
+    def get(self, request, format=None):
+        return Response(dict(countries))
+
+class StatesView(APIView):
+    
+    def get(self, request, format=None):
+        return Response(dict(STATE_CHOICES))
 
 class CenterViewSet(ModelViewSet):
     """This endpoint Represents the Centers
