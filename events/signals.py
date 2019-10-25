@@ -17,6 +17,14 @@ logger = logging.getLogger(__name__)
 
 center_event_poc = [
     {
+        "center_id": 89,
+        "mobile": 7069605637
+    },
+    {
+        "center_id": 90,
+        "mobile": "9601673613"
+    },
+    {
         "center_id": 4,
         "mobile": 9998992900
     },
@@ -364,7 +372,8 @@ def send_sms(sender, instance, created, **kwargs):
             pm = "8200312214"
 
         if instance.event.id == 85:
-            pms = [cep["mobile"] for cep in center_event_poc if cep["center_id"] == instance.home_center]
+            logger.info(instance.home_center)
+            pms = [cep["mobile"] for cep in center_event_poc if cep["center_id"] == instance.home_center.id]
             if len(pms) > 0:
                 pm = pms[0]
         # contacts_json.

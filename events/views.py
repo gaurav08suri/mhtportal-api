@@ -41,6 +41,7 @@ class EventParticipantViewSet(ModelViewSet):
     """
     permission_classes = (IsAuthenticatedOrPostOnly,)
     queryset = EventParticipant.objects.all()
+    queryset = queryset.prefetch_related('participant')
     serializer_class = EventParticipantSerializer
     filter_fields = ['id', 'event', 'participant', 'registration_no', 'home_center', 'event_center', 'accommodation',
      'payment_status', 'cashier', 'big_buddy', 'role', 'registration_status', 'created_on', 'updated_on']
