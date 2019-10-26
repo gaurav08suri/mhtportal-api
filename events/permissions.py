@@ -1,4 +1,4 @@
-from rest_framework.compat import is_authenticated
+# from rest_framework.compat import is_authenticated
 from rest_framework import permissions
 
 
@@ -13,6 +13,6 @@ class IsAuthenticatedOrPostOnly(permissions.BasePermission):
         if request.method  == 'POST':
             return True
         else:
-            return request.user and is_authenticated(request.user)
+            return request.user and request.user.is_authenticated
 
 
