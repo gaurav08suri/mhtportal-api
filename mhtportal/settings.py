@@ -82,6 +82,7 @@ DATABASES = {
         'ENGINE': config('DB_ENGINE'),
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
+        'CONN_MAX_AGE': None
     }
 }
 
@@ -248,6 +249,10 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
+        # 'django.db.backends': {
+        #     'level': 'DEBUG',
+        #     'handlers': ['console'],
+        # }
     }
 }
 
