@@ -19,7 +19,11 @@ from base.serializers import (AddressSerializer,
                             ParticipantSerializer,
                             ProfileSerializer)
 
+from events.tasks import test
 
+from django.core.cache import cache
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
 class MultipleFieldLookupMixin(object):
     """
@@ -44,15 +48,16 @@ class MeView(APIView):
     * Requires authentication.
     * Only logged in users are able to access this view.
     """
-    permission_classes = (IsAuthenticated,)
+    #permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
         """
         Return Profile of current logged in user.
         """
-        profile = get_object_or_404(Profile, user=request.user)
-        ps = ProfileSerializer(profile)
-        return Response(ps.data)
+        test.delay("1")
+        #profile = get_object_or_404(Profile, user=request.user)
+        #ps = ProfileSerializer(profile)
+        return Response(None)
 
 class CountriesView(APIView):
 
@@ -69,6 +74,10 @@ class CenterViewSet(ModelViewSet):
 
     It presents the list of Current Centers.
     """
+    @method_decorator(cache_page(60*60*2))
+    def list(self, request, *args, **kwargs):
+        super(CenterViewSet, self).list(request, *args, **kwargs)
+
     queryset = Center.objects.all()
     serializer_class = CenterSerializer
     filter_fields = ['id', 'name', 'parent', 'is_displayed']
@@ -112,6 +121,7 @@ class ParticipantViewSet(ModelViewSet):
     It can create/update/retrieve an Participant
     It also presents lists of Participants
     """
+    
     permission_classes = (IsAuthenticated,)
     queryset = Participant.objects.all()
     serializer_class = ParticipantSerializer

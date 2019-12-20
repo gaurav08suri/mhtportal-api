@@ -21,7 +21,7 @@ class Event(models.Model):
     # Choices
     YEAR_CHOICES = []
     curr_year = datetime.datetime.now().year
-    for r in range(curr_year, curr_year+5):
+    for r in range(2016, curr_year + 5):
         YEAR_CHOICES.append((r,r))
 
     GENDER_FEMALE = 'female'

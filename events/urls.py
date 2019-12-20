@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.conf import settings
 from rest_framework.urlpatterns import format_suffix_patterns
 from events.views import (EventViewSet,EventCategoryViewSet,
-                        EventParticipantViewSet)
+                        EventParticipantViewSet, bulk_register)
 
 api_endpoints_retrieve_update = {
     'get': 'retrieve',
@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^event-categories/(?P<pk>[0-9]+)/$', EventCategoryViewSet.as_view(api_endpoints_retrieve_update), name='events-categories-update'),
 
     url(r'^event-categories/$', EventCategoryViewSet.as_view(api_endpoints_list_create), name='events-categories-create'),
+    url(r'^bulk-register/$', bulk_register)
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

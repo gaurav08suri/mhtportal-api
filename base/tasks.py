@@ -17,5 +17,3 @@ def send_sms_async(url, params=None):
             requests.get(url)
     except requests.RequestException as e:
         logger.exception('While sending sms using requests')
-
-

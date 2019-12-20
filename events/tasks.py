@@ -3,11 +3,14 @@ import requests
 from celery import shared_task
 from django.conf import settings
 import json
-
+import time
 
 logger = logging.getLogger(__name__)
 
-
+@shared_task
+def test(q1):
+    time.sleep(5)
+    print("This is called")
 
 @shared_task
 def send_sms_async(type, params=None, headers={}):
