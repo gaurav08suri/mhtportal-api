@@ -19,7 +19,6 @@ from base.serializers import (AddressSerializer,
                             ParticipantSerializer,
                             ProfileSerializer)
 
-from events.tasks import test
 
 from django.core.cache import cache
 from django.utils.decorators import method_decorator
@@ -54,7 +53,6 @@ class MeView(APIView):
         """
         Return Profile of current logged in user.
         """
-        test.delay("1")
         #profile = get_object_or_404(Profile, user=request.user)
         #ps = ProfileSerializer(profile)
         return Response(None)
@@ -74,9 +72,9 @@ class CenterViewSet(ModelViewSet):
 
     It presents the list of Current Centers.
     """
-    @method_decorator(cache_page(60*60*2))
-    def list(self, request, *args, **kwargs):
-        super(CenterViewSet, self).list(request, *args, **kwargs)
+    # @method_decorator(cache_page(60*60*2))
+    # def list(self, request, *args, **kwargs):
+    #     super(CenterViewSet, self).list(request, *args, **kwargs)
 
     queryset = Center.objects.all()
     serializer_class = CenterSerializer
