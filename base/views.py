@@ -47,15 +47,15 @@ class MeView(APIView):
     * Requires authentication.
     * Only logged in users are able to access this view.
     """
-    #permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
         """
         Return Profile of current logged in user.
         """
-        #profile = get_object_or_404(Profile, user=request.user)
-        #ps = ProfileSerializer(profile)
-        return Response(None)
+        profile = get_object_or_404(Profile, user=request.user)
+        ps = ProfileSerializer(profile)
+        return Response(ps.data)
 
 class CountriesView(APIView):
 
