@@ -54,7 +54,9 @@ class Event(models.Model):
     rules = models.TextField(help_text=_("Any Rules"), blank=True)
     remarks = models.TextField(help_text=_("Any Remarks"), blank=True)
     active = models.BooleanField(help_text=_("Is event active?"))
-
+    poc_name = models.CharField(max_length=50, help_text="Name of point of contact")
+    poc_number = models.CharField(max_length=10, help_text="Contact number of POC")
+    is_global_poc = models.BooleanField(help_text=_("Is global PoC?"))
 
 
 class EventParticipant(models.Model):

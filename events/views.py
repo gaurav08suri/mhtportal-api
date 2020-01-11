@@ -48,7 +48,7 @@ class EventParticipantViewSet(ModelViewSet):
     It also presents lists of Event Participants
     """
     
-    # permission_classes = (IsAuthenticatedOrPostOnly,)
+    permission_classes = (IsAuthenticatedOrPostOnly,)
     queryset = EventParticipant.objects.all()
     queryset = queryset.prefetch_related('participant')
     serializer_class = EventParticipantSerializer
@@ -56,7 +56,6 @@ class EventParticipantViewSet(ModelViewSet):
      'payment_status', 'cashier', 'big_buddy', 'role', 'registration_status', 'created_on', 'updated_on']
 
 @api_view(['POST'])
-
 def bulk_register(request):
     tasks.bulk_registeration.delay(request.data)
     # req_data = request.data

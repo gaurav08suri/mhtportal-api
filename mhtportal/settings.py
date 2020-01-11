@@ -181,6 +181,11 @@ SMS_AUTH = config('SMS_AUTH')
 SMS_ROUTE= config('SMS_ROUTE')
 SMS_COUNTRY= "91"
 
+PUSHER_APP_ID = config('PUSHER_APP_ID')
+PUSHER_KEY = config('PUSHER_KEY')
+PUSHER_SECRET = config('PUSHER_SECRET')
+PUSHER_CLUSTER = config('PUSHER_CLUSTER')
+
 CACHES = {
     'default': {
         'BACKEND': 'diskcache.DjangoCache',

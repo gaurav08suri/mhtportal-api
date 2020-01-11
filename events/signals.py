@@ -332,11 +332,11 @@ def generate_registration_no(sender, instance, **kwargs):
     if instance.registration_no:
         return
 
-    ec = instance.event.event_code
-    if instance.participant.gender == 'male':
-        ec += '-M-'
-    else:
-        ec += '-F-'
+    ec = instance.event.event_code + '-M-'
+    # if instance.participant.gender == 'male':
+    #     ec += '-M-'
+    # else:
+    #     ec += '-F-'
     # last_registered = EventParticipant.objects.filter(event=instance.event,
     #                                                   participant__gender=instance.participant.gender).order_by('id').last()
 
