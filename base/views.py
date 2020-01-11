@@ -74,7 +74,7 @@ class CenterViewSet(ModelViewSet):
     """
     @method_decorator(cache_page(60*60*2))
     def list(self, request, *args, **kwargs):
-        super(CenterViewSet, self).list(request, *args, **kwargs)
+        return super(CenterViewSet, self).list(request, *args, **kwargs)
 
     queryset = Center.objects.all()
     serializer_class = CenterSerializer
