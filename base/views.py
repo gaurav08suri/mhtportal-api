@@ -20,6 +20,9 @@ from base.serializers import (AddressSerializer,
                             ProfileSerializer)
 
 
+from django.core.cache import cache
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
 class MultipleFieldLookupMixin(object):
     """
@@ -69,6 +72,10 @@ class CenterViewSet(ModelViewSet):
 
     It presents the list of Current Centers.
     """
+    @method_decorator(cache_page(60*60*2))
+    def list(self, request, *args, **kwargs):
+        return super(CenterViewSet, self).list(request, *args, **kwargs)
+
     queryset = Center.objects.all()
     serializer_class = CenterSerializer
     filter_fields = ['id', 'name', 'parent', 'is_displayed']
@@ -112,6 +119,7 @@ class ParticipantViewSet(ModelViewSet):
     It can create/update/retrieve an Participant
     It also presents lists of Participants
     """
+    
     permission_classes = (IsAuthenticated,)
     queryset = Participant.objects.all()
     serializer_class = ParticipantSerializer

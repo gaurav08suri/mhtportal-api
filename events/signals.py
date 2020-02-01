@@ -11,6 +11,9 @@ from base.models import (CenterScope,
 from events.models import (Event,
                            EventParticipant)
 from events.tasks import send_sms_async
+from django.db import connection
+
+
 import json
 
 logger = logging.getLogger(__name__)
@@ -318,25 +321,32 @@ def generate_event_code(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=EventParticipant)
 def generate_registration_no(sender, instance, **kwargs):
+    if settings.REDIS_CLIENT.exists(instance.event.event_code) != 1:
+        with connection.cursor() as cursor:
+            max_id_query = '''(select max(split_part(registration_no, '-', 4)::numeric) as max_id 
+                                    from events_eventparticipant where event_id = %s)'''
+            cursor.execute(max_id_query, [instance.event.id])
+            max_id_record = cursor.fetchall()
+            settings.REDIS_CLIENT.set(instance.event.event_code, max_id_record[0][0] or 0)
 
-    # no need to create if already there. I know there's a better way to
-    # achieve this.
     if instance.registration_no:
         return
 
-    ec = instance.event.event_code
-    if instance.participant.gender == 'male':
-        ec += '-M-'
-    else:
-        ec += '-F-'
-    last_registered = EventParticipant.objects.filter(event=instance.event,
-                                                      participant__gender=instance.participant.gender).order_by('id').last()
+    ec = instance.event.event_code + '-M-'
+    # if instance.participant.gender == 'male':
+    #     ec += '-M-'
+    # else:
+    #     ec += '-F-'
+    # last_registered = EventParticipant.objects.filter(event=instance.event,
+    #                                                   participant__gender=instance.participant.gender).order_by('id').last()
 
-    if last_registered:
-        total_registered = int(last_registered.registration_no.split('-')[-1])
-        instance.registration_no = ec + '{}'.format(total_registered+1)
-    else:
-        instance.registration_no = ec + '1'
+    # if last_registered:
+    #     total_registered = int(last_registered.registration_no.split('-')[-1])
+    #     instance.registration_no = ec + '{}'.format(total_registered+1)
+    # else:
+    #     instance.registration_no = ec + '1'
+
+    instance.registration_no = ec + '{}'.format(settings.REDIS_CLIENT.incr(instance.event.event_code))
 
 
 @receiver(post_save, sender=EventParticipant)
@@ -376,7 +386,9 @@ def send_sms(sender, instance, created, **kwargs):
             pms = [cep["mobile"] for cep in center_event_poc if cep["center_id"] == instance.home_center.id]
             if len(pms) > 0:
                 pm = pms[0]
-        # contacts_json.
+        
+        if instance.event.is_global_poc == True:
+            pm = instance.event.poc_number
 
         sms_string = settings.SMS_TEMPLATE.format(instance.registration_no, int(instance.event.fees), pm)
 

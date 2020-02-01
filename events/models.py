@@ -21,7 +21,7 @@ class Event(models.Model):
     # Choices
     YEAR_CHOICES = []
     curr_year = datetime.datetime.now().year
-    for r in range(curr_year, curr_year+5):
+    for r in range(2016, curr_year + 5):
         YEAR_CHOICES.append((r,r))
 
     GENDER_FEMALE = 'female'
@@ -54,7 +54,9 @@ class Event(models.Model):
     rules = models.TextField(help_text=_("Any Rules"), blank=True)
     remarks = models.TextField(help_text=_("Any Remarks"), blank=True)
     active = models.BooleanField(help_text=_("Is event active?"))
-
+    poc_name = models.CharField(max_length=50, help_text="Name of point of contact", blank=True)
+    poc_number = models.CharField(max_length=50, help_text="Contact number of POC", blank=True)
+    is_global_poc = models.BooleanField(help_text=_("Is global PoC?"), default=False)
 
 
 class EventParticipant(models.Model):

@@ -181,6 +181,27 @@ SMS_AUTH = config('SMS_AUTH')
 SMS_ROUTE= config('SMS_ROUTE')
 SMS_COUNTRY= "91"
 
+PUSHER_APP_ID = config('PUSHER_APP_ID')
+PUSHER_KEY = config('PUSHER_KEY')
+PUSHER_SECRET = config('PUSHER_SECRET')
+PUSHER_CLUSTER = config('PUSHER_CLUSTER')
+
+CACHES = {
+    'default': {
+        'BACKEND': 'diskcache.DjangoCache',
+        'LOCATION': 'cache',
+        'TIMEOUT': 300,
+        # ^-- Django setting for default timeout of each key.
+        'SHARDS': 8,
+        'DATABASE_TIMEOUT': 0.010,  # 10 milliseconds
+        # ^-- Timeout for each DjangoCache database transaction.
+        'OPTIONS': {
+            'size_limit': 2 ** 30   # 1 gigabyte
+        },
+    },
+}
+
+
 # Logging
 LOG_DIR = os.path.join(BASE_DIR, 'logs')
 LOGGING = {
@@ -249,10 +270,10 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-        # 'django.db.backends': {
-        #     'level': 'DEBUG',
-        #     'handlers': ['console'],
-        # }
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        }
     }
 }
 
