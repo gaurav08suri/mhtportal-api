@@ -327,7 +327,7 @@ def generate_registration_no(sender, instance, **kwargs):
                                     from events_eventparticipant where event_id = %s)'''
             cursor.execute(max_id_query, [instance.event.id])
             max_id_record = cursor.fetchall()
-            settings.REDIS_CLIENT.set(instance.event.event_code, max_id_record[0][0] or 1)
+            settings.REDIS_CLIENT.set(instance.event.event_code, max_id_record[0][0] or 0)
 
     if instance.registration_no:
         return
