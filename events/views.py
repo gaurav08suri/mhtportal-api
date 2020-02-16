@@ -15,6 +15,9 @@ from django.conf import settings
 from collections import defaultdict
 from events import tasks
 
+from django.core.cache import cache
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
 class EventViewSet(ModelViewSet):
     """This endpoint Represents the Events in the system
