@@ -34,6 +34,11 @@ class EventCategoryViewSet(ModelViewSet):
 
     It presents the list of all the event catgories.
     """
+
+    @method_decorator(cache_page(60*60*24))
+    def list(self, request, *args, **kwargs):
+        return super(EventCategoryViewSet, self).list(request, *args, **kwargs)
+
     queryset = EventCategory.objects.all()
     serializer_class = EventCategorySerializer
     filter_fields = ['id', 'category']
