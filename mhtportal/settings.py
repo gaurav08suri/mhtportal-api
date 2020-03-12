@@ -82,6 +82,8 @@ DATABASES = {
         'ENGINE': config('DB_ENGINE'),
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASS'),
+        'HOST': 'localhost',
         'CONN_MAX_AGE': None
     }
 }

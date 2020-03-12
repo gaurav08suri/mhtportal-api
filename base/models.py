@@ -156,11 +156,11 @@ class Participant(models.Model):
                             help_text=_("Mother's Name"))
     mother_mobile = models.CharField(max_length=15, validators=[MOBILE_VALIDATOR,],
                             blank=True, help_text=_("Mother's Mobile Number. Add +91 prefix"))
+    participant_code = models.CharField(max_length=100, help_text=("Participant Code"))
 
     def __str__(self):
         return "Participant: {} {}\n {}".format(
                 self.first_name, self.last_name, self.center)
-
 
 
 class Profile(models.Model):
