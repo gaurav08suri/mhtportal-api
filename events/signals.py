@@ -390,8 +390,8 @@ def send_sms(sender, instance, created, **kwargs):
         if instance.event.is_global_poc == True:
             pm = instance.event.poc_number
 
-        sms_string = settings.SMS_TEMPLATE.format(instance.registration_no, int(instance.event.fees), pm)
-
+        # sms_string = settings.SMS_TEMPLATE.format(instance.registration_no, int(instance.event.fees), pm)
+        sms_string = "We have received your Registration for Youth Shibir"
         # Because the sms vendor auto adds 91 to the number, we'll have to remove ours
         # Note: This is a hack and only works for India numbers. Please don't use this in
         # production.
