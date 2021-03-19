@@ -18,7 +18,7 @@ django-cors-headers==2.1.0
 django-countries==4.6.1
 django-localflavor==1.5.2
 django-url-filter==0.3.4
-djangorestframework==3.9.1
+djangorestframework==3.11.2
 djangorestframework-jwt==1.11.0
 docutils==0.13.1
 enum-compat==0.0.2
