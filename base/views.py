@@ -72,7 +72,7 @@ class CenterViewSet(ModelViewSet):
 
     It presents the list of Current Centers.
     """
-    @method_decorator(cache_page(60*60*2))
+    #@method_decorator(cache_page(60*60*2))
     def list(self, request, *args, **kwargs):
         return super(CenterViewSet, self).list(request, *args, **kwargs)
 

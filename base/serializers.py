@@ -62,6 +62,7 @@ class ParticipantSerializer(ModelSerializer):
     class Meta:
         model = Participant
         fields = '__all__'
+        #fields = ('center', 'email', 'gender', 'id', 'first_name',  'last_name', 'mobile', 'other_center')
 
 
 

@@ -19,13 +19,20 @@ from django.core.cache import cache
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 
+from django.db.models import Prefetch
+
+
 class EventViewSet(ModelViewSet):
     """This endpoint Represents the Events in the system
 
     It can create/update/retrieve an Event
     It also presents lists of Events
     """
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    #permission_classes = (IsAuthenticatedOrReadOnly,)
+   # @method_decorator(cache_page(60*60*24))
+    def list(self, request, *args, **kwargs):
+        return super(EventViewSet, self).list(request, *args, **kwargs)
+
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     filter_fields = ['id', 'name', 'center', 'year', 'event_code', 'gender', 'min_age', 'max_age', 'active', 'category']
@@ -57,8 +64,9 @@ class EventParticipantViewSet(ModelViewSet):
     """
     
     permission_classes = (IsAuthenticatedOrPostOnly,)
-    queryset = EventParticipant.objects.all()
-    queryset = queryset.prefetch_related('participant')
+    #queryset = EventParticipant.objects.filter(event=115).prefetch_related(Prefetch('participant', to_attr='participant_list'))
+    queryset = EventParticipant.objects.select_related('participant').filter(event__in=[119])
+    #queryset = queryset.prefetch_related('participant')
     serializer_class = EventParticipantSerializer
     filter_fields = ['id', 'event', 'participant', 'registration_no', 'home_center', 'event_center', 'accommodation',
      'payment_status', 'cashier', 'big_buddy', 'role', 'registration_status', 'created_on', 'updated_on']

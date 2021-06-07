@@ -390,7 +390,8 @@ def send_sms(sender, instance, created, **kwargs):
         if instance.event.is_global_poc == True:
             pm = instance.event.poc_number
 
-        sms_string = settings.SMS_TEMPLATE.format(instance.registration_no, int(instance.event.fees), pm)
+        #sms_string = settings.SMS_TEMPLATE.format(instance.registration_no, int(instance.event.fees), pm)
+        sms_string = '''We have received your Registration for Summer Camp 17-21 YMHT Boys. For more details, stay tuned on Akonnect & Whatsapp - DBVF'''
 
         # Because the sms vendor auto adds 91 to the number, we'll have to remove ours
         # Note: This is a hack and only works for India numbers. Please don't use this in
@@ -403,7 +404,7 @@ def send_sms(sender, instance, created, **kwargs):
         logger.info("Created SMS string {}".format(sms_string))
         try:
             # pass
-            send_sms_async.delay('POST', params={'to': [mobile], 'message': sms_string})
+            send_sms_async.delay('POST', params={'to': [mobile], 'message': sms_string, 'template_id': '1107162288785929886'})
 
         except Exception as e:
             logger.exception('while sending sms')

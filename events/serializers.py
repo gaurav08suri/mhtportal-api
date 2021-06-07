@@ -85,6 +85,7 @@ class EventParticipantSerializer(ModelSerializer):
     class Meta:
         model = EventParticipant
         fields = '__all__'
+        #fields = ('amount_paid', 'event', 'event_center', 'home_center', 'id', 'participant', 'registration_no', 'registration_status', 'role', 'skill')
         read_only_fields = ('registration_no',)
 
     def create(self, validated_data):

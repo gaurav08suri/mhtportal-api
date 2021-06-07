@@ -83,6 +83,7 @@ def send_sms_async(type, params=None, headers={}):
             data['sender'] = settings.SENDER_ID
             data['country'] = settings.SMS_COUNTRY
             data['route'] = settings.SMS_ROUTE
+            data['DLT_TE_ID'] = params['template_id']
             data['sms'] = [{'to': params['to'], 'message': params['message']}]
             #data['sms'] = [{'to': mobile, 'message': sms_string}]
             logger.info("In tasks, {}".format(settings.SMS_URL))
