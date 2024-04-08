@@ -40,6 +40,8 @@ class EventCategoryViewSet(ModelViewSet):
 
     @method_decorator(cache_page(60*60*24))
     def list(self, request, *args, **kwargs):
+        print("1")
+        print("2")
         return super(EventCategoryViewSet, self).list(request, *args, **kwargs)
 
     queryset = EventCategory.objects.all()
