@@ -21,8 +21,8 @@ on:
 jobs:
   prospector:
     runs-on: ubuntu-latest
-  steps:
-    - uses: jpetrucciani/prospector-check@1.10.3
+    steps:
+      - uses: jpetrucciani/prospector-check@1.10.3
   bandit:
     permissions:
       contents: read # for actions/checkout to fetch code
