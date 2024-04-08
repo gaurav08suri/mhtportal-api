@@ -15,6 +15,9 @@ from django.conf import settings
 from collections import defaultdict
 from events import tasks
 
+from django.core.cache import cache
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
 class EventViewSet(ModelViewSet):
     """This endpoint Represents the Events in the system
@@ -34,6 +37,13 @@ class EventCategoryViewSet(ModelViewSet):
 
     It presents the list of all the event catgories.
     """
+
+    @method_decorator(cache_page(60*60*24))
+    def list(self, request, *args, **kwargs):
+        print("1")
+        print("2")
+        return super(EventCategoryViewSet, self).list(request, *args, **kwargs)
+
     queryset = EventCategory.objects.all()
     serializer_class = EventCategorySerializer
     filter_fields = ['id', 'category']

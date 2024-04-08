@@ -1,0 +1,35 @@
+output-format: json
+
+strictness: medium
+test-warnings: true
+doc-warnings: false
+autodetect: false
+
+ignore-paths:
+  - venv
+
+pylint:
+  run: true
+  disable:
+   - F0401
+
+mypy:
+  run: true
+
+vulture:
+  run: true
+
+pyright:
+  run: true
+
+pycodestyle:
+  run: true
+
+pyflakes:
+  run: true
+
+mccabe:
+  run: true
+
+bandit:
+  run: true
